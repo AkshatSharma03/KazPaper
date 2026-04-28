@@ -1,0 +1,15 @@
+test_name,statistic_type,estimate,std_error,p_value,significance,interpretation
+China Import Share Trend,Coefficient,.6269303,,.32157987,,NOT significant - do not claim rising penetration
+China Export Share Trend,Coefficient,.59089792,,.0027491257,**,SIGNIFICANT - China's export share rising
+China Total Trade Share Trend,Coefficient,.62521434,,.053051334,†,Marginally significant
+Structural Break (Chow Test),F-statistic,3.8858459,,.082697399,†,Marginally significant - suggestive only
+Kazakhstan GDP Elasticity,Elasticity,.56548429,.90854186,.56095475,,NOT significant - avoid causal claims
+China GDP Elasticity,Elasticity,-2.434175,2.8117669,.4262284,,NOT significant - avoid causal claims
+GDP Elasticity Equality Test,F-statistic,2.0988562,,.20708144,,NOT significant - cannot reject equality
+Post-2020 Structural Shift,Coefficient,-.55312371,,.19731097,,NOT significant - no clear level shift
+Export Sensitivity to CHN GDP,Elasticity,-2.2674251,.95035028,.054330353,†,Marginally significant
+Import Sensitivity to CHN GDP,Elasticity,-11.707407,2.8147635,.0059491331,**,SIGNIFICANT - imports respond to CHN GDP
+Trade-to-GDP Ratio Trend,Coefficient,1.4245696,,.027399443,*,SIGNIFICANT - trade intensity rising
+COVID Asymmetry (Log-Difference),pp difference,-108.70997,,,,2020 import collapse vs export decline
+Export Growth Volatility,Std Dev,26.287754,14.49892,-23.087223,max=52.68,Export growth variability (min/max shown)
+,,,,,,

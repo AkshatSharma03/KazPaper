@@ -1,0 +1,1068 @@
+----------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /Users/akshatsharma/Documents/KazakhIrPapaper/logs/sinokaz_summary_improved.log
+  log type:  text
+ opened on:  18 Apr 2026, 18:08:36
+
+. 
+. local start_year 2015
+
+. local end_year   2024
+
+. 
+. di _newline(2) "==============================================================="
+
+
+===============================================================
+
+. di "  SINOKAZ SUMMARY TABLE (IMPROVED COMPATIBILITY VERSION)"
+  SINOKAZ SUMMARY TABLE (IMPROVED COMPATIBILITY VERSION)
+
+. di "==============================================================="
+===============================================================
+
+. 
+. *--------------------------------------------------------------------------
+. * BUILD MASTER PANEL
+. *--------------------------------------------------------------------------
+. 
+. tempfile base old
+
+. 
+. * Prefer freshly generated Step 2 panel
+. capture confirm file "kaz_china_trade_panel.dta"
+
+. if _rc == 0 {
+.     use "kaz_china_trade_panel.dta", clear
+. }
+
+. else {
+.     di as error "WARN: kaz_china_trade_panel.dta not found; using tables/table8_annual_bilateral_t
+> rade.csv"
+.     capture confirm file "tables/table8_annual_bilateral_trade.csv"
+.     if _rc != 0 {
+.         di as error "Missing required input: tables/table8_annual_bilateral_trade.csv"
+.         log close
+.         exit 601
+.     }
+.     import delimited "tables/table8_annual_bilateral_trade.csv", clear
+. }
+
+. 
+. keep if inrange(year, `start_year', `end_year')
+(0 observations deleted)
+
+. sort year
+
+. 
+. capture confirm variable exports_bn
+
+. if _rc != 0 {
+.     di as error "Missing exports_bn"
+.     log close
+.     exit 498
+. }
+
+. capture confirm variable imports_bn
+
+. if _rc != 0 {
+.     di as error "Missing imports_bn"
+.     log close
+.     exit 498
+. }
+
+. capture confirm variable total_trade_bn
+
+. if _rc != 0 gen total_trade_bn = exports_bn + imports_bn
+
+. capture confirm variable trade_balance
+
+. if _rc != 0 gen trade_balance = exports_bn - imports_bn
+
+. capture confirm variable deficit_ratio
+
+. if _rc != 0 gen deficit_ratio = (imports_bn - exports_bn) / total_trade_bn if total_trade_bn > 0
+
+. capture confirm variable export_growth
+
+. if _rc != 0 {
+.     tsset year
+.     gen export_growth = 100 * (exports_bn - L.exports_bn) / L.exports_bn if L.exports_bn > 0
+. }
+
+. capture confirm variable import_growth
+
+. if _rc != 0 {
+.     tsset year
+.     gen import_growth = 100 * (imports_bn - L.imports_bn) / L.imports_bn if L.imports_bn > 0
+. }
+
+. 
+. capture confirm variable reporter
+
+. if _rc != 0 {
+.     gen reporter = "KAZ"
+. }
+
+. else {
+.     replace reporter = "KAZ" if missing(reporter)
+(0 real changes made)
+. }
+
+. 
+. capture confirm variable partner
+
+. if _rc != 0 {
+.     gen partner = "CHN"
+. }
+
+. else {
+.     replace partner = "CHN" if missing(partner)
+(0 real changes made)
+. }
+
+. 
+. keep year reporter partner exports_bn imports_bn total_trade_bn trade_balance deficit_ratio export
+> _growth import_growth
+
+. save `base', replace
+(file /var/folders/cr/rmz3xz_s61dd6zjh0mqy_z2m0000gn/T//S_04336.000001 not found)
+file /var/folders/cr/rmz3xz_s61dd6zjh0mqy_z2m0000gn/T//S_04336.000001 saved as .dta format
+
+. 
+. * Bring in ancillary variables from existing summary master when available
+. capture confirm file "sinokaz_summary_master.dta"
+
+. if _rc == 0 {
+.     use "sinokaz_summary_master.dta", clear
+.     keep year gdp_kaz gdp_chn kaz_exports_bn kaz_imports_bn kaz_total_trade_wb ln_gdp_kaz ln_gdp_c
+> hn
+.     bysort year: keep if _n == 1
+(0 observations deleted)
+.     save `old', replace
+(file /var/folders/cr/rmz3xz_s61dd6zjh0mqy_z2m0000gn/T//S_04336.000002 not found)
+file /var/folders/cr/rmz3xz_s61dd6zjh0mqy_z2m0000gn/T//S_04336.000002 saved as .dta format
+. 
+.     use `base', clear
+.     merge 1:1 year using `old', nogen keep(master match)
+
+    Result                      Number of obs
+    -----------------------------------------
+    Not matched                             0
+    Matched                                10  
+    -----------------------------------------
+. }
+
+. else {
+.     use `base', clear
+. }
+
+. 
+. sort year
+
+. isid year
+
+. 
+. gen t = year - `start_year'
+
+. gen post2020 = (year >= 2020)
+
+. gen ln_trade   = ln(total_trade_bn) if total_trade_bn > 0
+
+. gen ln_exports = ln(exports_bn) if exports_bn > 0
+
+. gen ln_imports = ln(imports_bn) if imports_bn > 0
+
+. 
+. capture confirm variable ln_gdp_kaz
+
+. if _rc != 0 gen ln_gdp_kaz = ln(gdp_kaz) if gdp_kaz > 0
+
+. capture confirm variable ln_gdp_chn
+
+. if _rc != 0 gen ln_gdp_chn = ln(gdp_chn) if gdp_chn > 0
+
+. 
+. capture confirm variable chn_export_share
+
+. if _rc != 0 gen chn_export_share = 100 * exports_bn / kaz_exports_bn if kaz_exports_bn > 0
+
+. capture confirm variable chn_import_share
+
+. if _rc != 0 gen chn_import_share = 100 * imports_bn / kaz_imports_bn if kaz_imports_bn > 0
+
+. capture confirm variable chn_trade_share
+
+. if _rc != 0 gen chn_trade_share = 100 * total_trade_bn / kaz_total_trade_wb if kaz_total_trade_wb 
+> > 0
+
+. capture confirm variable share_gap
+
+. if _rc != 0 gen share_gap = chn_import_share - chn_export_share
+
+. capture confirm variable trade_gdp_ratio
+
+. if _rc != 0 gen trade_gdp_ratio = 100 * total_trade_bn / gdp_kaz if gdp_kaz > 0
+
+. 
+. tsset year
+
+Time variable: year, 2015 to 2024
+        Delta: 1 unit
+
+. save "sinokaz_summary_master.dta", replace
+file sinokaz_summary_master.dta saved
+
+. di as result "Created: sinokaz_summary_master.dta"
+Created: sinokaz_summary_master.dta
+
+. 
+. *--------------------------------------------------------------------------
+. * CALCULATE CORE STATISTICS
+. *--------------------------------------------------------------------------
+. 
+. quietly summarize exports_bn if year == `start_year', meanonly
+
+. local exp_start = r(mean)
+
+. quietly summarize exports_bn if year == `end_year', meanonly
+
+. local exp_end = r(mean)
+
+. 
+. quietly summarize imports_bn if year == `start_year', meanonly
+
+. local imp_start = r(mean)
+
+. quietly summarize imports_bn if year == `end_year', meanonly
+
+. local imp_end = r(mean)
+
+. 
+. quietly summarize year if trade_balance < 0, meanonly
+
+. local first_deficit = r(min)
+
+. 
+. * Trend regressions (set missing if not estimable)
+. local imp_coef .
+
+. local imp_p .
+
+. capture noisily regress chn_import_share t
+
+      Source |       SS           df       MS      Number of obs   =        10
+-------------+----------------------------------   F(1, 8)         =      1.12
+       Model |  32.4259312         1  32.4259312   Prob > F        =    0.3216
+    Residual |  232.386363         8  29.0482954   R-squared       =    0.1224
+-------------+----------------------------------   Adj R-squared   =    0.0128
+       Total |  264.812294         9  29.4235883   Root MSE        =    5.3896
+
+------------------------------------------------------------------------------
+chn_import~e | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+           t |   .6269303   .5933806     1.06   0.322    -.7414079    1.995268
+       _cons |   8.806224   3.167786     2.78   0.024     1.501297    16.11115
+------------------------------------------------------------------------------
+
+. if _rc == 0 {
+.     local imp_coef = _b[t]
+.     local imp_p = 2 * ttail(e(df_r), abs(_b[t] / _se[t]))
+. }
+
+. 
+. local exp_coef .
+
+. local exp_p .
+
+. capture noisily regress chn_export_share t
+
+      Source |       SS           df       MS      Number of obs   =        10
+-------------+----------------------------------   F(1, 8)         =     18.18
+       Model |  28.8057286         1  28.8057286   Prob > F        =    0.0027
+    Residual |   12.678889         8  1.58486112   R-squared       =    0.6944
+-------------+----------------------------------   Adj R-squared   =    0.6562
+       Total |  41.4846176         9  4.60940195   Root MSE        =    1.2589
+
+------------------------------------------------------------------------------
+chn_export~e | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+           t |   .5908979   .1386017     4.26   0.003     .2712818    .9105141
+       _cons |   7.234539   .7399307     9.78   0.000     5.528256    8.940823
+------------------------------------------------------------------------------
+
+. if _rc == 0 {
+.     local exp_coef = _b[t]
+.     local exp_p = 2 * ttail(e(df_r), abs(_b[t] / _se[t]))
+. }
+
+. 
+. local tot_coef .
+
+. local tot_p .
+
+. capture noisily regress chn_trade_share t
+
+      Source |       SS           df       MS      Number of obs   =        10
+-------------+----------------------------------   F(1, 8)         =      5.14
+       Model |   32.248671         1   32.248671   Prob > F        =    0.0531
+    Residual |  50.1527918         8  6.26909898   R-squared       =    0.3914
+-------------+----------------------------------   Adj R-squared   =    0.3153
+       Total |  82.4014628         9  9.15571809   Root MSE        =    2.5038
+
+------------------------------------------------------------------------------
+chn_trade_~e | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+           t |   .6252143   .2756612     2.27   0.053    -.0104614     1.26089
+       _cons |    7.78897   1.471628     5.29   0.001      4.39539    11.18255
+------------------------------------------------------------------------------
+
+. if _rc == 0 {
+.     local tot_coef = _b[t]
+.     local tot_p = 2 * ttail(e(df_r), abs(_b[t] / _se[t]))
+. }
+
+. 
+. local tdgp_coef .
+
+. local tdgp_p .
+
+. capture noisily regress trade_gdp_ratio t
+
+      Source |       SS           df       MS      Number of obs   =        10
+-------------+----------------------------------   F(1, 8)         =      7.25
+       Model |  167.425393         1  167.425393   Prob > F        =    0.0274
+    Residual |  184.785968         8   23.098246   R-squared       =    0.4754
+-------------+----------------------------------   Adj R-squared   =    0.4098
+       Total |  352.211361         9  39.1345957   Root MSE        =    4.8061
+
+------------------------------------------------------------------------------
+trade_gdp_~o | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+           t |    1.42457   .5291302     2.69   0.027     .2043933    2.644746
+       _cons |   8.547113   2.824782     3.03   0.016     2.033154    15.06107
+------------------------------------------------------------------------------
+
+. if _rc == 0 {
+.     local tdgp_coef = _b[t]
+.     local tdgp_p = 2 * ttail(e(df_r), abs(_b[t] / _se[t]))
+. }
+
+. 
+. * Structural break style statistic (2020 split)
+. local chow_f .
+
+. local chow_p .
+
+. capture noisily regress trade_balance t
+
+      Source |       SS           df       MS      Number of obs   =        10
+-------------+----------------------------------   F(1, 8)         =      0.14
+       Model |   4.5175412         1   4.5175412   Prob > F        =    0.7191
+    Residual |  260.185861         8  32.5232326   R-squared       =    0.0171
+-------------+----------------------------------   Adj R-squared   =   -0.1058
+       Total |  264.703402         9  29.4114891   Root MSE        =    5.7029
+
+------------------------------------------------------------------------------
+trade_bala~e | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+           t |   .2340044   .6278702     0.37   0.719    -1.213867    1.681876
+       _cons |   2.569664    3.35191     0.77   0.465    -5.159853    10.29918
+------------------------------------------------------------------------------
+
+. if _rc == 0 {
+.     local rss_r = e(rss)
+.     capture drop d2020 t_d2020
+.     gen d2020 = (year >= 2020)
+.     gen t_d2020 = t * d2020
+.     capture noisily regress trade_balance t d2020 t_d2020
+
+      Source |       SS           df       MS      Number of obs   =        10
+-------------+----------------------------------   F(3, 6)         =      2.67
+       Model |  151.346584         3  50.4488615   Prob > F        =    0.1413
+    Residual |  113.356818         6   18.892803   R-squared       =    0.5718
+-------------+----------------------------------   Adj R-squared   =    0.3576
+       Total |  264.703402         9  29.4114891   Root MSE        =    4.3466
+
+------------------------------------------------------------------------------
+trade_bala~e | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+           t |   .4033261   1.374511     0.29   0.779    -2.959981    3.766633
+       d2020 |   28.10506   10.37733     2.71   0.035     2.712644    53.49747
+     t_d2020 |  -3.746484   1.943852    -1.93   0.102    -8.502919     1.00995
+       _cons |   .8678846    3.36685     0.26   0.805    -7.370502    9.106271
+------------------------------------------------------------------------------
+.     if _rc == 0 {
+.         local rss_u = e(rss)
+.         local df_u = e(df_r)
+.         local q = 2
+.         local chow_f = ((`rss_r' - `rss_u') / `q') / (`rss_u' / `df_u')
+.         local chow_p = Ftail(`q', `df_u', `chow_f')
+.     }
+.     drop d2020 t_d2020
+. }
+
+. 
+. * Elasticity models (optional)
+. local beta_kaz .
+
+. local se_kaz .
+
+. local p_kaz .
+
+. local beta_chn .
+
+. local se_chn .
+
+. local p_chn .
+
+. local eq_f .
+
+. local eq_p .
+
+. local beta_post20 .
+
+. local p_post20 .
+
+. 
+. capture noisily regress ln_trade ln_gdp_kaz ln_gdp_chn t post2020, vce(robust)
+
+Linear regression                               Number of obs     =         10
+                                                F(4, 5)           =      11.61
+                                                Prob > F          =     0.0096
+                                                R-squared         =     0.8769
+                                                Root MSE          =     .22876
+
+------------------------------------------------------------------------------
+             |               Robust
+    ln_trade | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+  ln_gdp_kaz |   .5654843   .9085419     0.62   0.561    -1.769997    2.900965
+  ln_gdp_chn |  -2.434175   2.811767    -0.87   0.426    -9.662052    4.793702
+           t |   .3283667   .1495082     2.20   0.079    -.0559564    .7126897
+    post2020 |  -.5531237   .3721149    -1.49   0.197    -1.509675     .403428
+       _cons |   22.64439   30.66013     0.74   0.493    -56.16999    101.4588
+------------------------------------------------------------------------------
+
+. if _rc == 0 {
+.     local beta_kaz = _b[ln_gdp_kaz]
+.     local se_kaz = _se[ln_gdp_kaz]
+.     local p_kaz = 2 * ttail(e(df_r), abs(_b[ln_gdp_kaz] / _se[ln_gdp_kaz]))
+. 
+.     local beta_chn = _b[ln_gdp_chn]
+.     local se_chn = _se[ln_gdp_chn]
+.     local p_chn = 2 * ttail(e(df_r), abs(_b[ln_gdp_chn] / _se[ln_gdp_chn]))
+. 
+.     quietly test ln_gdp_chn = ln_gdp_kaz
+.     local eq_f = r(F)
+.     local eq_p = r(p)
+. 
+.     local beta_post20 = _b[post2020]
+.     local p_post20 = 2 * ttail(e(df_r), abs(_b[post2020] / _se[post2020]))
+. }
+
+. 
+. local exp_beta .
+
+. local exp_se .
+
+. local exp_p2 .
+
+. capture noisily regress ln_exports ln_gdp_chn ln_gdp_kaz t, vce(robust)
+
+Linear regression                               Number of obs     =         10
+                                                F(3, 6)           =      29.83
+                                                Prob > F          =     0.0005
+                                                R-squared         =     0.9180
+                                                Root MSE          =     .14702
+
+------------------------------------------------------------------------------
+             |               Robust
+  ln_exports | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+  ln_gdp_chn |  -2.267425   .9503503    -2.39   0.054    -4.592849    .0579982
+  ln_gdp_kaz |    .014937   .3480444     0.04   0.967     -.836697     .866571
+           t |     .25963   .0614818     4.22   0.006     .1091894    .4100706
+       _cons |   23.41135   10.06211     2.33   0.059    -1.209749    48.03246
+------------------------------------------------------------------------------
+
+. if _rc == 0 {
+.     local exp_beta = _b[ln_gdp_chn]
+.     local exp_se = _se[ln_gdp_chn]
+.     local exp_p2 = 2 * ttail(e(df_r), abs(_b[ln_gdp_chn] / _se[ln_gdp_chn]))
+. }
+
+. 
+. local imp_beta .
+
+. local imp_se .
+
+. local imp_p2 .
+
+. capture noisily regress ln_imports ln_gdp_chn ln_gdp_kaz t, vce(robust)
+
+Linear regression                               Number of obs     =         10
+                                                F(3, 6)           =       9.18
+                                                Prob > F          =     0.0117
+                                                R-squared         =     0.7527
+                                                Root MSE          =     .42591
+
+------------------------------------------------------------------------------
+             |               Robust
+  ln_imports | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+  ln_gdp_chn |  -11.70741   2.814764    -4.16   0.006    -18.59489   -4.819929
+  ln_gdp_kaz |  -.9102253    .892888    -1.02   0.347    -3.095043    1.274593
+           t |   .8117817   .1989139     4.08   0.006     .3250568    1.298507
+       _cons |   116.6605   29.99191     3.89   0.008     43.27293    190.0481
+------------------------------------------------------------------------------
+
+. if _rc == 0 {
+.     local imp_beta = _b[ln_gdp_chn]
+.     local imp_se = _se[ln_gdp_chn]
+.     local imp_p2 = 2 * ttail(e(df_r), abs(_b[ln_gdp_chn] / _se[ln_gdp_chn]))
+. }
+
+. 
+. quietly summarize exports_bn if year == 2019, meanonly
+
+. local exp_2019 = r(mean)
+
+. quietly summarize exports_bn if year == 2020, meanonly
+
+. local exp_2020 = r(mean)
+
+. quietly summarize imports_bn if year == 2019, meanonly
+
+. local imp_2019 = r(mean)
+
+. quietly summarize imports_bn if year == 2020, meanonly
+
+. local imp_2020 = r(mean)
+
+. 
+. local covid_asym .
+
+. if `exp_2019' > 0 & `exp_2020' > 0 & `imp_2019' > 0 & `imp_2020' > 0 {
+.     local covid_exp = 100 * ln(`exp_2020' / `exp_2019')
+.     local covid_imp = 100 * ln(`imp_2020' / `imp_2019')
+.     local covid_asym = `covid_imp' - `covid_exp'
+. }
+
+. 
+. quietly summarize export_growth, detail
+
+. local vol_mean = r(mean)
+
+. local vol_sd = r(sd)
+
+. local vol_min = r(min)
+
+. local vol_max = r(max)
+
+. 
+. *--------------------------------------------------------------------------
+. * TABLE 10 (10 rows expected by validator)
+. *--------------------------------------------------------------------------
+. 
+. clear
+
+. set obs 10
+Number of observations (_N) was 0, now 10.
+
+. gen str30 claim = ""
+(10 missing values generated)
+
+. gen str60 finding = ""
+(10 missing values generated)
+
+. gen str40 estimate = ""
+(10 missing values generated)
+
+. gen double se = .
+(10 missing values generated)
+
+. gen double pvalue = .
+(10 missing values generated)
+
+. gen str8 sig = ""
+(10 missing values generated)
+
+. gen str40 ci_95 = ""
+(10 missing values generated)
+
+. gen str30 caveat = ""
+(10 missing values generated)
+
+. 
+. replace claim = "Trade Evolution" in 1
+(1 real change made)
+
+. replace finding = "Exports 2015 to 2024" in 1
+(1 real change made)
+
+. replace estimate = string(`exp_start', "%5.2f") + " to " + string(`exp_end', "%5.2f") in 1
+(1 real change made)
+
+. replace caveat = "Descriptive" in 1
+(1 real change made)
+
+. 
+. replace claim = "Trade Evolution" in 2
+(1 real change made)
+
+. replace finding = "Imports 2015 to 2024" in 2
+(1 real change made)
+
+. replace estimate = string(`imp_start', "%5.2f") + " to " + string(`imp_end', "%5.2f") in 2
+(1 real change made)
+
+. replace caveat = "Descriptive" in 2
+(1 real change made)
+
+. 
+. replace claim = "Trade Evolution" in 3
+(1 real change made)
+
+. replace finding = "First deficit year" in 3
+(1 real change made)
+
+. replace estimate = string(`first_deficit', "%4.0f") in 3
+(1 real change made)
+
+. replace caveat = "Year-based" in 3
+(1 real change made)
+
+. 
+. replace claim = "Share Trend" in 4
+(1 real change made)
+
+. replace finding = "China import share trend" in 4
+(1 real change made)
+
+. replace estimate = string(`imp_coef', "%9.4f") in 4
+(1 real change made)
+
+. replace pvalue = `imp_p' in 4
+(1 real change made)
+
+. replace caveat = "OLS small-N" in 4
+(1 real change made)
+
+. 
+. replace claim = "Share Trend" in 5
+(1 real change made)
+
+. replace finding = "China export share trend" in 5
+(1 real change made)
+
+. replace estimate = string(`exp_coef', "%9.4f") in 5
+(1 real change made)
+
+. replace pvalue = `exp_p' in 5
+(1 real change made)
+
+. replace caveat = "OLS small-N" in 5
+(1 real change made)
+
+. 
+. replace claim = "Share Trend" in 6
+(1 real change made)
+
+. replace finding = "China total share trend" in 6
+(1 real change made)
+
+. replace estimate = string(`tot_coef', "%9.4f") in 6
+(1 real change made)
+
+. replace pvalue = `tot_p' in 6
+(1 real change made)
+
+. replace caveat = "OLS small-N" in 6
+(1 real change made)
+
+. 
+. replace claim = "Break Test" in 7
+(1 real change made)
+
+. replace finding = "Trade balance structural break" in 7
+(1 real change made)
+
+. replace estimate = string(`chow_f', "%9.4f") in 7
+(1 real change made)
+
+. replace pvalue = `chow_p' in 7
+(1 real change made)
+
+. replace caveat = "2020 Chow-style" in 7
+(1 real change made)
+
+. 
+. replace claim = "Elasticity" in 8
+(1 real change made)
+
+. replace finding = "ln_trade on ln_gdp_kaz" in 8
+(1 real change made)
+
+. replace estimate = string(`beta_kaz', "%9.4f") in 8
+(1 real change made)
+
+. replace se = `se_kaz' in 8
+(1 real change made)
+
+. replace pvalue = `p_kaz' in 8
+(1 real change made)
+
+. replace caveat = "Robust OLS" in 8
+(1 real change made)
+
+. 
+. replace claim = "Elasticity" in 9
+(1 real change made)
+
+. replace finding = "ln_trade on ln_gdp_chn" in 9
+(1 real change made)
+
+. replace estimate = string(`beta_chn', "%9.4f") in 9
+(1 real change made)
+
+. replace se = `se_chn' in 9
+(1 real change made)
+
+. replace pvalue = `p_chn' in 9
+(1 real change made)
+
+. replace caveat = "Robust OLS" in 9
+(1 real change made)
+
+. 
+. replace claim = "Vulnerability" in 10
+(1 real change made)
+
+. replace finding = "trade_gdp_ratio trend" in 10
+(1 real change made)
+
+. replace estimate = string(`tdgp_coef', "%9.4f") in 10
+(1 real change made)
+
+. replace pvalue = `tdgp_p' in 10
+(1 real change made)
+
+. replace caveat = "OLS small-N" in 10
+(1 real change made)
+
+. 
+. replace sig = "***" if pvalue < 0.001
+(0 real changes made)
+
+. replace sig = "**" if pvalue >= 0.001 & pvalue < 0.01
+(1 real change made)
+
+. replace sig = "*" if pvalue >= 0.01 & pvalue < 0.05
+(1 real change made)
+
+. replace sig = "dagger" if pvalue >= 0.05 & pvalue < 0.10
+(2 real changes made)
+
+. 
+. export delimited using "tables/table10_empirical_summary_IMPROVED.csv", replace
+file tables/table10_empirical_summary_IMPROVED.csv saved
+
+. di as result "Created: tables/table10_empirical_summary_IMPROVED.csv"
+Created: tables/table10_empirical_summary_IMPROVED.csv
+
+. 
+. *--------------------------------------------------------------------------
+. * TABLE 11 (>=13 rows expected by validator)
+. *--------------------------------------------------------------------------
+. 
+. clear
+
+. set obs 14
+Number of observations (_N) was 0, now 14.
+
+. gen str40 test_name = ""
+(14 missing values generated)
+
+. gen str20 statistic_type = ""
+(14 missing values generated)
+
+. gen double estimate = .
+(14 missing values generated)
+
+. gen double std_error = .
+(14 missing values generated)
+
+. gen double p_value = .
+(14 missing values generated)
+
+. gen str10 significance = ""
+(14 missing values generated)
+
+. gen str70 interpretation = ""
+(14 missing values generated)
+
+. 
+. replace test_name = "China Import Share Trend" in 1
+(1 real change made)
+
+. replace statistic_type = "Coefficient" in 1
+(1 real change made)
+
+. replace estimate = `imp_coef' in 1
+(1 real change made)
+
+. replace p_value = `imp_p' in 1
+(1 real change made)
+
+. replace interpretation = "Import share trend test" in 1
+(1 real change made)
+
+. 
+. replace test_name = "China Export Share Trend" in 2
+(1 real change made)
+
+. replace statistic_type = "Coefficient" in 2
+(1 real change made)
+
+. replace estimate = `exp_coef' in 2
+(1 real change made)
+
+. replace p_value = `exp_p' in 2
+(1 real change made)
+
+. replace interpretation = "Export share trend test" in 2
+(1 real change made)
+
+. 
+. replace test_name = "China Total Trade Share Trend" in 3
+(1 real change made)
+
+. replace statistic_type = "Coefficient" in 3
+(1 real change made)
+
+. replace estimate = `tot_coef' in 3
+(1 real change made)
+
+. replace p_value = `tot_p' in 3
+(1 real change made)
+
+. replace interpretation = "Total share trend test" in 3
+(1 real change made)
+
+. 
+. replace test_name = "Structural Break (Chow Test)" in 4
+(1 real change made)
+
+. replace statistic_type = "F-statistic" in 4
+(1 real change made)
+
+. replace estimate = `chow_f' in 4
+(1 real change made)
+
+. replace p_value = `chow_p' in 4
+(1 real change made)
+
+. replace interpretation = "2020 break indicator with interaction" in 4
+(1 real change made)
+
+. 
+. replace test_name = "Kazakhstan GDP Elasticity" in 5
+(1 real change made)
+
+. replace statistic_type = "Elasticity" in 5
+(1 real change made)
+
+. replace estimate = `beta_kaz' in 5
+(1 real change made)
+
+. replace std_error = `se_kaz' in 5
+(1 real change made)
+
+. replace p_value = `p_kaz' in 5
+(1 real change made)
+
+. replace interpretation = "ln_trade model coefficient" in 5
+(1 real change made)
+
+. 
+. replace test_name = "China GDP Elasticity" in 6
+(1 real change made)
+
+. replace statistic_type = "Elasticity" in 6
+(1 real change made)
+
+. replace estimate = `beta_chn' in 6
+(1 real change made)
+
+. replace std_error = `se_chn' in 6
+(1 real change made)
+
+. replace p_value = `p_chn' in 6
+(1 real change made)
+
+. replace interpretation = "ln_trade model coefficient" in 6
+(1 real change made)
+
+. 
+. replace test_name = "GDP Elasticity Equality Test" in 7
+(1 real change made)
+
+. replace statistic_type = "F-statistic" in 7
+(1 real change made)
+
+. replace estimate = `eq_f' in 7
+(1 real change made)
+
+. replace p_value = `eq_p' in 7
+(1 real change made)
+
+. replace interpretation = "Test ln_gdp_chn = ln_gdp_kaz" in 7
+(1 real change made)
+
+. 
+. replace test_name = "Post-2020 Structural Shift" in 8
+(1 real change made)
+
+. replace statistic_type = "Coefficient" in 8
+(1 real change made)
+
+. replace estimate = `beta_post20' in 8
+(1 real change made)
+
+. replace p_value = `p_post20' in 8
+(1 real change made)
+
+. replace interpretation = "Post-2020 dummy in ln_trade model" in 8
+(1 real change made)
+
+. 
+. replace test_name = "Export Sensitivity to CHN GDP" in 9
+(1 real change made)
+
+. replace statistic_type = "Elasticity" in 9
+(1 real change made)
+
+. replace estimate = `exp_beta' in 9
+(1 real change made)
+
+. replace std_error = `exp_se' in 9
+(1 real change made)
+
+. replace p_value = `exp_p2' in 9
+(1 real change made)
+
+. replace interpretation = "ln_exports model coefficient" in 9
+(1 real change made)
+
+. 
+. replace test_name = "Import Sensitivity to CHN GDP" in 10
+(1 real change made)
+
+. replace statistic_type = "Elasticity" in 10
+(1 real change made)
+
+. replace estimate = `imp_beta' in 10
+(1 real change made)
+
+. replace std_error = `imp_se' in 10
+(1 real change made)
+
+. replace p_value = `imp_p2' in 10
+(1 real change made)
+
+. replace interpretation = "ln_imports model coefficient" in 10
+(1 real change made)
+
+. 
+. replace test_name = "Trade-to-GDP Ratio Trend" in 11
+(1 real change made)
+
+. replace statistic_type = "Coefficient" in 11
+(1 real change made)
+
+. replace estimate = `tdgp_coef' in 11
+(1 real change made)
+
+. replace p_value = `tdgp_p' in 11
+(1 real change made)
+
+. replace interpretation = "Trade intensity time trend" in 11
+(1 real change made)
+
+. 
+. replace test_name = "COVID Asymmetry (Log-Difference)" in 12
+(1 real change made)
+
+. replace statistic_type = "pp difference" in 12
+(1 real change made)
+
+. replace estimate = `covid_asym' in 12
+(1 real change made)
+
+. replace interpretation = "2020 import shock relative to export shock" in 12
+(1 real change made)
+
+. 
+. replace test_name = "Export Growth Volatility" in 13
+(1 real change made)
+
+. replace statistic_type = "Std Dev" in 13
+(1 real change made)
+
+. replace estimate = `vol_sd' in 13
+(1 real change made)
+
+. replace std_error = `vol_mean' in 13
+(1 real change made)
+
+. replace p_value = `vol_min' in 13
+(1 real change made)
+
+. replace interpretation = "Volatility summary (mean in std_error, min in p_value)" in 13
+(1 real change made)
+
+. 
+. replace test_name = "Export Growth Max" in 14
+(1 real change made)
+
+. replace statistic_type = "Maximum" in 14
+(1 real change made)
+
+. replace estimate = `vol_max' in 14
+(1 real change made)
+
+. replace interpretation = "Maximum annual export growth in sample" in 14
+(1 real change made)
+
+. 
+. replace significance = "***" if p_value < 0.001
+(1 real change made)
+
+. replace significance = "**" if p_value >= 0.001 & p_value < 0.01
+(2 real changes made)
+
+. replace significance = "*" if p_value >= 0.01 & p_value < 0.05
+(1 real change made)
+
+. replace significance = "dagger" if p_value >= 0.05 & p_value < 0.10
+(3 real changes made)
+
+. 
+. export delimited using "tables/table11_statistical_significance_REVISED.csv", replace
+file tables/table11_statistical_significance_REVISED.csv saved
+
+. di as result "Created: tables/table11_statistical_significance_REVISED.csv"
+Created: tables/table11_statistical_significance_REVISED.csv
+
+. 
+. di _newline "Step 3 outputs complete."
+
+Step 3 outputs complete.
+
+. log close
+      name:  <unnamed>
+       log:  /Users/akshatsharma/Documents/KazakhIrPapaper/logs/sinokaz_summary_improved.log
+  log type:  text
+ closed on:  18 Apr 2026, 18:08:37
+----------------------------------------------------------------------------------------------------

@@ -1,0 +1,11 @@
+sector,rca,sector_china,rca_interpretation
+Energy,1.5472685,9303.0244,Comparative advantage (RCA>1)
+Metals_Minerals,1.1227423,12397.013,Comparative advantage (RCA>1)
+Agriculture,1.0329486,1657.1705,Comparative advantage (RCA>1)
+Chemicals,0.63043869,2717.4507,No revealed comparative advantage (RCA<1)
+Textiles,0.43937936,98.438202,No revealed comparative advantage (RCA<1)
+Machinery_Electrical,0.17234693,422.86331,No revealed comparative advantage (RCA<1)
+Plastics_Rubber,0.13837546,79.024193,No revealed comparative advantage (RCA<1)
+Other,0.08742027,61.781902,No revealed comparative advantage (RCA<1)
+Wood_Paper,0.022100698,1.3839997,No revealed comparative advantage (RCA<1)
+Vehicles,0.020139707,7.11761,No revealed comparative advantage (RCA<1)

@@ -1,0 +1,38 @@
+=============================================================
+DEFICIT RATIO SIGN CONVENTION
+=============================================================
+
+Formula: deficit_ratio = (imports - exports) / (imports + exports)
+
+INTERPRETATION:
+  - Negative values: Kazakhstan TRADE SURPLUS (exports > imports)
+  - Zero: Balanced trade (exports = imports)
+  - Positive values: Kazakhstan TRADE DEFICIT (imports > exports)
+
+EXAMPLES FROM DATA:
+  2015: -0.037  (small surplus, exports > imports)
+  2020: -0.555  (large surplus, imports collapsed)
+  2023: +0.064  (deficit, imports > exports)
+
+KEY TURNING POINT:
+  2023 was the first year with a positive deficit ratio,
+  indicating Kazakhstan's first trade deficit with China
+  in the 2015-2024 period.
+
+GRAPHICAL CONVENTION:
+  In trade balance figures:
+  - Bars above zero = Kazakhstan surplus
+  - Bars below zero = Kazakhstan deficit
+  
+  In deficit ratio figures:
+  - Negative values (below zero line) = surplus years
+  - Positive values (above zero line) = deficit years
+
+IMPORTANT FOR PAPER:
+  Include one explicit sentence in the manuscript:
+  "The deficit ratio is negative when Kazakhstan runs a 
+  trade surplus (exports exceed imports) and turns positive 
+  when imports exceed exports, with 2023 marking the first 
+  deficit year in the series."
+
+=============================================================

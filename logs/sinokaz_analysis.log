@@ -1,0 +1,344 @@
+----------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /Users/akshatsharma/Documents/KazakhIrPapaper/logs/sinokaz_analysis.log
+  log type:  text
+ opened on:  18 Apr 2026, 18:08:34
+
+. 
+. local start_year 2015
+
+. local end_year   2024
+
+. 
+. di _newline(2) "==============================================================="
+
+
+===============================================================
+
+. di "  SINO-KAZAKH MAIN BILATERAL ANALYSIS (CORE)"
+  SINO-KAZAKH MAIN BILATERAL ANALYSIS (CORE)
+
+. di "==============================================================="
+===============================================================
+
+. 
+. *--------------------------------------------------------------------------
+. * INPUT CHECK
+. *--------------------------------------------------------------------------
+. 
+. capture confirm file "tables/table8_annual_bilateral_trade.csv"
+
+. if _rc != 0 {
+.     di as error "Missing required input: tables/table8_annual_bilateral_trade.csv"
+.     log close
+.     exit 601
+. }
+
+. 
+. *--------------------------------------------------------------------------
+. * BUILD MAIN PANEL
+. *--------------------------------------------------------------------------
+. 
+. import delimited "tables/table8_annual_bilateral_trade.csv", clear
+(encoding automatically selected: ISO-8859-9)
+(6 vars, 10 obs)
+
+. keep if inrange(year, `start_year', `end_year')
+(0 observations deleted)
+
+. sort year
+
+. 
+. capture confirm variable exports_bn
+
+. if _rc != 0 {
+.     di as error "Missing required variable exports_bn in table8 input."
+.     log close
+.     exit 498
+. }
+
+. 
+. capture confirm variable imports_bn
+
+. if _rc != 0 {
+.     di as error "Missing required variable imports_bn in table8 input."
+.     log close
+.     exit 498
+. }
+
+. 
+. capture confirm variable total_trade_bn
+
+. if _rc != 0 {
+.     gen total_trade_bn = exports_bn + imports_bn
+. }
+
+. 
+. capture confirm variable trade_balance
+
+. if _rc != 0 {
+.     gen trade_balance = exports_bn - imports_bn
+. }
+
+. 
+. capture confirm variable deficit_ratio
+
+. if _rc != 0 {
+.     gen deficit_ratio = (imports_bn - exports_bn) / total_trade_bn if total_trade_bn > 0
+. }
+
+. 
+. gen reporter = "KAZ"
+
+. gen partner  = "CHN"
+
+. 
+. tsset year
+
+Time variable: year, 2015 to 2024
+        Delta: 1 unit
+
+. gen export_growth = 100 * (exports_bn - L.exports_bn) / L.exports_bn if L.exports_bn > 0
+(1 missing value generated)
+
+. gen import_growth = 100 * (imports_bn - L.imports_bn) / L.imports_bn if L.imports_bn > 0
+(1 missing value generated)
+
+. 
+. gen t = year - `start_year'
+
+. gen post2020 = (year >= 2020)
+
+. 
+. gen ln_trade   = ln(total_trade_bn) if total_trade_bn > 0
+
+. gen ln_exports = ln(exports_bn) if exports_bn > 0
+
+. gen ln_imports = ln(imports_bn) if imports_bn > 0
+
+. 
+. label variable exports_bn    "Exports to China (USD bn)"
+
+. label variable imports_bn    "Imports from China (USD bn)"
+
+. label variable total_trade_bn "Total Bilateral Trade (USD bn)"
+
+. label variable trade_balance "Trade Balance: Exports - Imports (USD bn)"
+
+. label variable deficit_ratio "Deficit Ratio: (M-X)/(M+X)"
+
+. label variable export_growth "Export growth rate (%)"
+
+. label variable import_growth "Import growth rate (%)"
+
+. 
+. save "kaz_china_trade_panel.dta", replace
+(file kaz_china_trade_panel.dta not found)
+file kaz_china_trade_panel.dta saved
+
+. di as result "Created: kaz_china_trade_panel.dta"
+Created: kaz_china_trade_panel.dta
+
+. 
+. * Re-export canonical table8 from the rebuilt panel for consistency
+. export delimited year exports_bn imports_bn total_trade_bn trade_balance deficit_ratio ///
+>     using "tables/table8_annual_bilateral_trade.csv", replace
+file tables/table8_annual_bilateral_trade.csv saved
+
+. di as result "Updated: tables/table8_annual_bilateral_trade.csv"
+Updated: tables/table8_annual_bilateral_trade.csv
+
+. 
+. *--------------------------------------------------------------------------
+. * FIGURES 12-14
+. *--------------------------------------------------------------------------
+. 
+. use "kaz_china_trade_panel.dta", clear
+
+. 
+. * Figure 12: Trade flows
+. twoway ///
+>     (line exports_bn year, lcolor(navy) lwidth(medthick) lpattern(solid)) ///
+>     (line imports_bn year, lcolor(cranberry) lwidth(medthick) lpattern(dash)) ///
+>     (line total_trade_bn year, lcolor(forest_green) lwidth(thin) lpattern(dot)), ///
+>     xline(2015, lcolor(gray) lpattern(shortdash) lwidth(thin)) ///
+>     xline(2020, lcolor(black) lpattern(dash) lwidth(thin)) ///
+>     xlabel(`start_year'(1)`end_year', angle(45) labsize(small)) ///
+>     ylabel(0(10)35, format(%9.0f) labsize(small)) ///
+>     ytitle("USD Billions", size(small)) ///
+>     xtitle("Year", size(small)) ///
+>     title("Kazakhstan-China Bilateral Trade, 2015-2024", size(medium)) ///
+>     subtitle("Exports, imports, and total trade", size(small)) ///
+>     legend(order(1 "Exports to China" 2 "Imports from China" 3 "Total trade") ///
+>            position(6) rows(1) size(small)) ///
+>     scheme(s2color)
+
+. 
+. graph export "figures/fig12_trade_flows.png", replace width(2000)
+file /Users/akshatsharma/Documents/KazakhIrPapaper/figures/fig12_trade_flows.png saved as PNG
+    format
+
+. graph export "figures/fig12_trade_flows.pdf", replace
+file /Users/akshatsharma/Documents/KazakhIrPapaper/figures/fig12_trade_flows.pdf saved as PDF
+    format
+
+. 
+. * Figure 13: Trade balance
+. twoway ///
+>     (bar trade_balance year, color(navy%60) barwidth(0.7)) ///
+>     (line trade_balance year, lcolor(navy) lwidth(medthick)), ///
+>     yline(0, lcolor(black) lwidth(thin)) ///
+>     xline(2015, lcolor(gray) lpattern(shortdash)) ///
+>     xline(2020, lcolor(black) lpattern(dash)) ///
+>     xlabel(`start_year'(1)`end_year', angle(45) labsize(small)) ///
+>     ylabel(-10(5)15, format(%9.0f) labsize(small)) ///
+>     ytitle("Trade Balance (USD bn)", size(small)) ///
+>     xtitle("Year", size(small)) ///
+>     title("Kazakhstan-China Trade Balance", size(medium)) ///
+>     subtitle("Exports minus imports", size(small)) ///
+>     legend(off) ///
+>     scheme(s2color)
+
+. 
+. graph export "figures/fig13_trade_balance.png", replace width(2000)
+file /Users/akshatsharma/Documents/KazakhIrPapaper/figures/fig13_trade_balance.png saved as PNG
+    format
+
+. graph export "figures/fig13_trade_balance.pdf", replace
+file /Users/akshatsharma/Documents/KazakhIrPapaper/figures/fig13_trade_balance.pdf saved as PDF
+    format
+
+. 
+. * Figure 14: Deficit ratio
+. twoway ///
+>     (connected deficit_ratio year, lcolor(maroon) mcolor(maroon) msymbol(O) msize(medlarge)), ///
+>     yline(0, lcolor(black) lwidth(thin)) ///
+>     xline(2015, lcolor(gray) lpattern(shortdash)) ///
+>     xline(2020, lcolor(black) lpattern(dash)) ///
+>     xlabel(`start_year'(1)`end_year', angle(45) labsize(small)) ///
+>     ytitle("Deficit Ratio: (M - X) / (M + X)", size(small)) ///
+>     xtitle("Year", size(small)) ///
+>     title("Kazakhstan-China Trade Asymmetry", size(medium)) ///
+>     subtitle("Positive values indicate China-favored imbalance", size(small)) ///
+>     scheme(s2color)
+
+. 
+. graph export "figures/fig14_deficit_ratio.png", replace width(2000)
+file /Users/akshatsharma/Documents/KazakhIrPapaper/figures/fig14_deficit_ratio.png saved as PNG
+    format
+
+. graph export "figures/fig14_deficit_ratio.pdf", replace
+file /Users/akshatsharma/Documents/KazakhIrPapaper/figures/fig14_deficit_ratio.pdf saved as PDF
+    format
+
+. 
+. *--------------------------------------------------------------------------
+. * LIGHTWEIGHT UNIT ROOT TABLE (compatibility output)
+. *--------------------------------------------------------------------------
+. 
+. tempname h
+
+. postfile `h' str24 variable_name double adf_z_stat double p_value using "tables/unit_root_test_res
+> ults.dta", replace
+(file tables/unit_root_test_results.dta not found)
+
+. 
+. foreach v in trade_balance deficit_ratio total_trade_bn {
+  2.     capture noisily dfuller `v', lags(1) trend
+  3.     if _rc == 0 {
+  4.         post `h' ("`v'") (r(Zt)) (r(p))
+  5.     }
+  6.     else {
+  7.         post `h' ("`v'") (.) (.)
+  8.     }
+  9. }
+
+Augmented Dickey–Fuller test for unit root
+
+Variable: trade_balance                     Number of obs  = 8
+                                            Number of lags = 1
+
+H0: Random walk with or without drift
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(t)            -0.771       -4.380       -3.600       -3.240
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.9681.
+
+Augmented Dickey–Fuller test for unit root
+
+Variable: deficit_ratio                     Number of obs  = 8
+                                            Number of lags = 1
+
+H0: Random walk with or without drift
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(t)            -1.118       -4.380       -3.600       -3.240
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.9260.
+
+Augmented Dickey–Fuller test for unit root
+
+Variable: total_trade_bn                    Number of obs  = 8
+                                            Number of lags = 1
+
+H0: Random walk with or without drift
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(t)            -1.768       -4.380       -3.600       -3.240
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.7198.
+
+. postclose `h'
+
+. 
+. use "tables/unit_root_test_results.dta", clear
+
+. export delimited using "tables/unit_root_test_results.csv", replace
+file tables/unit_root_test_results.csv saved
+
+. erase "tables/unit_root_test_results.dta"
+
+. 
+. di as result "Created: tables/unit_root_test_results.csv"
+Created: tables/unit_root_test_results.csv
+
+. 
+. di _newline "Core outputs generated:"
+
+Core outputs generated:
+
+. di "  - kaz_china_trade_panel.dta"
+  - kaz_china_trade_panel.dta
+
+. di "  - tables/table8_annual_bilateral_trade.csv"
+  - tables/table8_annual_bilateral_trade.csv
+
+. di "  - figures/fig12_trade_flows.png/pdf"
+  - figures/fig12_trade_flows.png/pdf
+
+. di "  - figures/fig13_trade_balance.png/pdf"
+  - figures/fig13_trade_balance.png/pdf
+
+. di "  - figures/fig14_deficit_ratio.png/pdf"
+  - figures/fig14_deficit_ratio.png/pdf
+
+. di "  - tables/unit_root_test_results.csv"
+  - tables/unit_root_test_results.csv
+
+. 
+. log close
+      name:  <unnamed>
+       log:  /Users/akshatsharma/Documents/KazakhIrPapaper/logs/sinokaz_analysis.log
+  log type:  text
+ closed on:  18 Apr 2026, 18:08:36
+----------------------------------------------------------------------------------------------------
