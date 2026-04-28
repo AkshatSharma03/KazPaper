@@ -6,9 +6,11 @@
 \usepackage{graphicx}
 \usepackage{hyperref}
 \usepackage{setspace}
+\usepackage{longtable}
+\usepackage{array}
 \onehalfspacing
 
-\title{Kazakhstan's Trade Reorientation and the Structural Shift in Sino--Kazakh Trade (2015--2024)}
+\title{Kazakhstan's Trade Reorientation and the Structural Shift in Sino--Kazakh Trade, 2015--2024}
 \author{}
 \date{April 2026}
 
@@ -16,133 +18,192 @@
 \maketitle
 
 \begin{abstract}
-This paper synthesizes the project evidence on Kazakhstan's external trade structure and the post-2022 acceleration of trade integration with China. Using existing WTO-based project outputs for 2015--2024, we compare China with Russia and the EU, examine bilateral composition and sectoral asymmetries, and assess the shift from sustained bilateral surpluses to deficits. The evidence indicates that China has moved from a secondary to a co-leading trade partner in Kazakhstan's comparison set, while trade structure remains asymmetric: Kazakhstan exports commodities and semi-processed materials, but imports increasingly concentrated manufactured goods. The 2023 break in the bilateral balance and high sectoral import concentration imply persistent vulnerability unless diversification and domestic upgrading keep pace with trade expansion.
+This paper provides a consolidated, full-length account of Kazakhstan's changing external trade structure and the deepening of its trade relationship with China. Using only existing project outputs derived from WTO-oriented bilateral datasets for 2015--2024, we examine four linked questions: (1) how China's position changed relative to Russia and the EU in Kazakhstan's trade system; (2) whether bilateral growth with China became structurally asymmetric across sectors and products; (3) how the bilateral trade balance shifted after 2022; and (4) how these changes compare with Kazakhstan's broader multivector economic strategy. The project evidence points to a pronounced reconfiguration after 2022 and a break in 2023, when sustained bilateral surpluses with China shifted to deficits. The structure of trade remains uneven: Kazakhstan's exports to China are concentrated in commodities and semi-processed goods, while imports from China are concentrated in manufactures (machinery, vehicles, textiles). This pattern does not imply a deterministic loss of autonomy, but it does imply that future policy credibility depends on diversification of suppliers, domestic capability-building, and selective upgrading in tradable sectors.
 \end{abstract}
 
 \section{Introduction}
-Kazakhstan's external economic strategy is formally multivector, yet the composition of its trade has changed substantially over the last decade. This paper consolidates project outputs into a single narrative with consistent interpretation from Kazakhstan's perspective.
+Kazakhstan's foreign economic policy is frequently characterized as multivector: a deliberate strategy of balancing relations across major external poles rather than relying on a single partner. In practice, however, trade structures can evolve faster than policy narratives. Over the last decade, Kazakhstan's trade with China has increased rapidly in absolute value and changed in composition. At the same time, trade with Russia and the EU remains central but functionally distinct.
 
-Unless explicitly stated otherwise, all bilateral statistics are interpreted as follows: exports are goods Kazakhstan sells to China, and imports are goods Kazakhstan buys from China.
+This paper turns a large set of existing project outputs into one coherent manuscript. It does not introduce new data or new charts. Instead, it synthesizes the evidence already generated in the repository and answers a straightforward analytical question: has recent growth in Sino--Kazakh trade represented balanced integration or an asymmetric structural shift?
 
-\section{Data and Scope}
-The analysis uses existing project tables and figures generated from WTO-oriented bilateral data workflows. The effective annual window in the existing outputs is 2015--2024. No new data are introduced in this manuscript.
+The paper proceeds in seven steps. Section 2 clarifies data scope and interpretation conventions. Section 3 reviews Kazakhstan's external trade context in comparative perspective. Section 4 analyzes structural features of Sino--Kazakh trade. Section 5 compares China with Russia and the EU as trade channels. Section 6 discusses policy implications for resilience and industrial upgrading. Section 7 concludes. Appendix sections reproduce key existing project tables for reference continuity.
 
-Core source files already present in the repository include:
+\section{Data, Definitions, and Analytical Scope}
+\subsection{Data Sources Used in This Draft}
+This manuscript uses existing project files only, with no new extraction and no newly generated figures. The core inputs are:
 \begin{itemize}
 \item \texttt{tables/table8\_annual\_bilateral\_trade.csv}
 \item \texttt{tables/table4\_multivector\_diversification.csv}
 \item \texttt{tables/table2\_china\_sectoral\_breakdown.csv}
-\item Annotated figures in \texttt{figures/fig*\_annotated.png}
+\item \texttt{tables/table1\_sectoral\_composition.csv}
+\item Existing annotated figures in \texttt{figures/fig*\_annotated.png}
 \end{itemize}
 
-\section{Kazakhstan's External Trade Structure (Context)}
-\subsection{Overview of Trade Partners}
-Within the project comparison set (China--Russia--EU), partner shares indicate a rebalanced but still diversified structure. Existing outputs show that China and Russia increased relative weight after 2022, while the EU share declined but remained substantial.
+The effective annual coverage for bilateral trend interpretation in existing outputs is 2015--2024.
+
+\subsection{Perspective and Sign Convention}
+All bilateral flow statistics are interpreted from Kazakhstan's perspective:
+\begin{itemize}
+\item \textbf{Exports to China} are goods sold by Kazakhstan to China.
+\item \textbf{Imports from China} are goods purchased by Kazakhstan from China.
+\item \textbf{Trade Balance} is Exports minus Imports.
+\end{itemize}
+
+A positive balance indicates a Kazakhstan surplus; a negative balance indicates a Kazakhstan deficit.
+
+\subsection{Why Comparative Framing Matters}
+The same bilateral trend can appear stronger or weaker depending on denominator choice. A share measured within a restricted comparison set (China--Russia--EU) is not numerically equivalent to a share measured in total world trade. Both are analytically useful, but they answer different questions. The first captures relative position among major peer partners; the second captures absolute concentration in the full external basket.
+
+\section{Kazakhstan's External Trade Structure: Comparative Context}
+\subsection{Partner Architecture and Functional Differentiation}
+The existing project evidence suggests that Kazakhstan's external trade channels remain functionally differentiated:
+\begin{itemize}
+\item EU linkage is strongly connected to hydrocarbon-heavy export destinations.
+\item Russia linkage remains dense in regional integration and intermediate supply channels.
+\item China linkage combines demand for resource exports with rapidly expanding manufactured imports.
+\end{itemize}
+
+This differentiation is central to understanding why ``dependence'' is multidimensional. High import concentration in one channel may coexist with high export dependence in another.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.93\textwidth]{figures/fig8_vulnerability_multivector_annotated.png}
-\caption{Multivector comparison set dynamics (existing project figure).}
-\label{fig:multivector}
+\includegraphics[width=0.94\textwidth]{figures/fig8_vulnerability_multivector_annotated.png}
+\caption{Multivector dynamics in the China--Russia--EU comparison set (existing project figure).}
+\label{fig:multi}
 \end{figure}
 
-\subsection{Evolution of Partner Shares}
-The share trajectory supports structural reweighting rather than full replacement of legacy partners. China rises sharply in the late period, especially around the 2023 inflection.
+\subsection{Evolution of Relative Position, 2015--2024}
+The comparison-set series indicates that China's relative position strengthened materially in the late period, especially around 2023--2024. This does not eliminate the relevance of Russia and the EU, but it does alter bargaining geometry: Kazakhstan's external trade system now contains a stronger China-centered manufacturing supply channel than earlier in the decade.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.93\textwidth]{figures/fig11_hedging_behavior_annotated.png}
-\caption{China--Russia trade orientation and relative shift (existing project figure).}
-\label{fig:hedging}
+\includegraphics[width=0.94\textwidth]{figures/fig11_hedging_behavior_annotated.png}
+\caption{China--Russia orientation in Kazakhstan's trade pattern (existing project figure).}
+\label{fig:hedge}
 \end{figure}
 
-\subsection{Basic Export--Import Composition}
-Bilateral composition differs strongly by partner role. Existing project evidence consistently shows export-heavy engagement with energy-linked channels and increasing import dependence in manufacturing-intensive channels.
+\subsection{Implication for ``Multivector'' Interpretation}
+A multivector strategy should not be interpreted as static partner shares. Instead, it should be interpreted as preservation of substitution options over time. The observed late-period acceleration in Chinese import penetration raises the policy threshold required to preserve those options.
 
 \section{Structural Features of Sino--Kazakh Trade}
-\subsection{China's Rise as a Leading Partner}
-The project time-series outputs show that total bilateral trade with China expanded rapidly and reached a new regime in 2023--2024.
+\subsection{Scale Expansion and Timing of the Break}
+Existing annual flow outputs show two simultaneous facts: long-run bilateral growth and a late-period regime change. Total bilateral trade expands sharply in 2023--2024 compared to the pre-2023 baseline, but the balance component worsens from Kazakhstan's perspective.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.93\textwidth]{figures/fig12_trade_flows_annotated.png}
-\caption{Kazakhstan--China aggregate trade flows, 2015--2024 (existing project figure).}
+\includegraphics[width=0.94\textwidth]{figures/fig12_trade_flows_annotated.png}
+\caption{Kazakhstan--China annual bilateral trade flows, 2015--2024 (existing project figure).}
 \label{fig:flows}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.93\textwidth]{figures/fig10_2023_structural_shift_annotated.png}
-\caption{2023 structural break in bilateral pattern (existing project figure).}
-\label{fig:shift2023}
+\includegraphics[width=0.94\textwidth]{figures/fig10_2023_structural_shift_annotated.png}
+\caption{Post-2022 structural shift with 2023 as break point (existing project figure).}
+\label{fig:break}
 \end{figure}
 
-\subsection{Sectoral and Product Composition}
-The trade profile remains asymmetric: exports to China are concentrated in commodities and semi-processed sectors, while imports from China are concentrated in machinery/electrical goods, vehicles, and textiles.
+\subsection{Sectoral Composition: Commodities vs Manufactures}
+The project sectoral evidence consistently shows a compositional asymmetry:
+\begin{itemize}
+\item Kazakhstan's exports to China remain concentrated in commodities and semi-processed categories.
+\item Kazakhstan's imports from China are concentrated in manufacturing-intensive categories.
+\end{itemize}
+
+This configuration is not inherently unsustainable, but it tends to produce vulnerability if domestic upgrading in tradable manufactures lags behind import deepening.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.93\textwidth]{figures/fig1_export_composition_annotated.png}
-\caption{Export composition to China (existing project figure).}
-\label{fig:expcomp}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.93\textwidth]{figures/fig2_import_composition_annotated.png}
-\caption{Import composition from China (existing project figure).}
-\label{fig:impcomp}
-\end{figure}
-
-\subsection{Trade Balance, Deficits, and Vulnerabilities}
-The major shift is the transition from sustained pre-2023 bilateral surpluses to deficits in 2023 and 2024. This is consistent with faster post-2022 import growth relative to export growth.
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.93\textwidth]{figures/fig13_trade_balance_annotated.png}
-\caption{Bilateral trade balance dynamics (existing project figure).}
-\label{fig:balance}
+\includegraphics[width=0.94\textwidth]{figures/fig1_export_composition_annotated.png}
+\caption{Composition of Kazakhstan's exports to China (existing project figure).}
+\label{fig:exp}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.93\textwidth]{figures/fig14_deficit_ratio_annotated.png}
-\caption{Deficit/asymmetry trajectory (existing project figure).}
-\label{fig:deficitratio}
+\includegraphics[width=0.94\textwidth]{figures/fig2_import_composition_annotated.png}
+\caption{Composition of Kazakhstan's imports from China (existing project figure).}
+\label{fig:imp}
 \end{figure}
 
-\subsection{Statistical Discrepancies and Data Politics}
-A recurring interpretation issue is denominator choice: partner shares computed in a restricted comparison set can imply stronger apparent concentration than shares measured against full world trade totals. The project's multivector and asymmetry figures illustrate this distinction.
-
-\section{Comparing China to Other Partners}
-\subsection{China vs Russia}
-Existing outputs indicate distinct dependence mechanisms: China dominates selected manufacturing import channels, while Russia remains embedded through legacy regional integration and intermediate flows.
+\subsection{Trade Balance Dynamics and Vulnerability}
+The balance transition is the clearest structural signal in the existing outputs. Kazakhstan moved from repeated annual bilateral surpluses (pre-2023) to deficits in 2023 and 2024. This was driven by much faster growth in import values than export values.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.93\textwidth]{figures/fig9_sectoral_penetration_heatmap_annotated.png}
-\caption{Sectoral penetration structure across categories (existing project figure).}
-\label{fig:heatmap}
+\includegraphics[width=0.94\textwidth]{figures/fig13_trade_balance_annotated.png}
+\caption{Kazakhstan--China trade balance dynamics (existing project figure).}
+\label{fig:bal}
 \end{figure}
-
-\subsection{China vs EU}
-The existing project narrative treats China and the EU as functionally different channels: China for high-volume manufactured supply and the EU for standards-intensive links and high-value export destinations.
-
-\subsection{Perceived Risks}
-Dependency concerns are tied to three interacting patterns visible in existing outputs: import concentration in key sectors, commodity-heavy export profile, and post-2023 balance deterioration. These patterns reinforce deindustrialization concerns unless offset by domestic upgrading and supplier diversification.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.93\textwidth]{figures/fig4_china_penetration_annotated.png}
-\caption{China import penetration and dependency concern (existing project figure).}
-\label{fig:penetration}
+\includegraphics[width=0.94\textwidth]{figures/fig14_deficit_ratio_annotated.png}
+\caption{Deficit-ratio trajectory and asymmetry deepening (existing project figure).}
+\label{fig:def}
 \end{figure}
 
-\section{Selected Summary Table (Existing Output)}
+\subsection{Penetration and Concentration by Sector}
+Import concentration risk is not uniform across sectors. Existing project heatmap and penetration outputs indicate high exposure in categories with limited short-run substitution space, especially machinery/electrical goods, vehicles, and textiles.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.94\textwidth]{figures/fig9_sectoral_penetration_heatmap_annotated.png}
+\caption{Sectoral penetration intensity map (existing project figure).}
+\label{fig:heat}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.94\textwidth]{figures/fig4_china_penetration_annotated.png}
+\caption{China import penetration profile (existing project figure).}
+\label{fig:pen}
+\end{figure}
+
+\subsection{Data Politics and Statistical Frictions}
+Public debates often treat discrepancies across reports as direct contradiction. In practice, most differences are generated by:
+\begin{itemize}
+\item denominator choice (comparison set vs world total),
+\item aggregation level (sector summaries vs product detail),
+\item mirror-statistics and reporting lag effects.
+\end{itemize}
+
+This does not eliminate uncertainty, but it helps separate methodological variation from substantive disagreement.
+
+\section{Comparing China with Russia and the EU}
+\subsection{China vs Russia: Structure and Conditionality}
+The existing evidence indicates that China and Russia represent different dependence profiles. Russia retains deep institutional and logistical embeddedness in regional systems, while China increasingly dominates specific manufacturing supply lanes. The resulting policy challenge is not choosing one dependence over another, but managing two dependence mechanisms with different transmission channels.
+
+\subsection{China vs EU: Technology Content and Standards Channels}
+Within the project narrative, EU linkage remains relevant for standards-intensive economic interfaces and high-value destination structure, while China provides scale and speed in manufactured imports. For Kazakhstan, this creates a policy frontier: using Chinese volume advantages without locking out standards and capability-upgrading pathways that require diversified technological ecosystems.
+
+\subsection{Synthesis: Why the Comparison Matters}
+A purely bilateral Kazakhstan--China reading can overstate inevitability. A comparative frame shows that outcomes are policy-mediated: procurement strategy, supplier diversification, domestic standards infrastructure, and industrial finance design can alter the trajectory.
+
+\section{Policy and Research Implications}
+\subsection{Industrial Policy Implications}
+Three implications follow from the existing project evidence.
+\begin{enumerate}
+\item \textbf{Sequencing matters:} rapid import deepening without capability-building amplifies asymmetry.
+\item \textbf{Targeting matters:} concentration risk is sector-specific and should be managed by sector.
+\item \textbf{Governance matters:} project-screening and local-content design need measurable upgrading benchmarks.
+\end{enumerate}
+
+\subsection{Multivector Credibility Under Structural Change}
+Multivector credibility is not measured by diplomatic rhetoric alone. It is measured by whether Kazakhstan preserves economically viable alternatives in critical sectors. As concentration rises, preserving alternatives becomes more expensive and institutionally demanding.
+
+\subsection{Limitations and Next Steps}
+This paper intentionally relies only on existing project outputs. Limitations include the 2015--2024 coverage window in published outputs and potential sensitivity to aggregation choices. Future extensions can incorporate updated annual releases and deeper product-level decomposition without changing the core interpretation framework established here.
+
+\section{Conclusion}
+This full-length synthesis supports five consolidated conclusions. First, the Sino--Kazakh trade relationship expanded rapidly in scale over 2015--2024, with an acceleration after 2022. Second, 2023 represents a structural break in balance dynamics, as Kazakhstan shifted from sustained bilateral surpluses to deficits. Third, sectoral composition remains asymmetric: Kazakhstan exports commodities and semi-processed goods, while importing concentrated manufactures. Fourth, vulnerability is concentrated rather than universal, with specific sectors driving systemic exposure. Fifth, the trajectory remains policy-contingent: diversification, domestic upgrading, and institutional design can still shape the long-run balance between integration and autonomy.
+
+\appendix
+\section{Appendix A: Annual Kazakhstan--China Bilateral Trade (Existing Project Table)}
 \begin{table}[H]
 \centering
 \small
-\caption{Kazakhstan--China Annual Bilateral Trade, 2015--2024 (existing project table)}
+\caption{Kazakhstan--China Annual Bilateral Trade, 2015--2024}
 \label{tab:annual}
 \begin{tabular}{lrrrr}
 \toprule
@@ -162,7 +223,62 @@ Year & Exports (B\$) & Imports (B\$) & Balance (B\$) & Total (B\$) \\
 \end{tabular}
 \end{table}
 
-\section{Conclusion}
-Using only existing project outputs, the evidence supports four conclusions. First, 2023 is a structural inflection point in bilateral trade balance dynamics. Second, China's role in Kazakhstan's trade structure has deepened materially in the late period. Third, the relationship remains compositionally asymmetric (commodity exports versus manufactured imports). Fourth, vulnerability is concentrated in high-penetration sectors, implying that diversification and industrial upgrading are necessary for preserving multivector policy autonomy.
+\section{Appendix B: Sectoral Shift Summary (Existing Project Table)}
+\begin{table}[H]
+\centering
+\small
+\caption{Sectoral Trade Composition: Pre-2023 vs Post-2023 (from existing outputs)}
+\label{tab:sectoral}
+\begin{tabular}{lrrrrrr}
+\toprule
+Sector & \multicolumn{3}{c}{Exports} & \multicolumn{3}{c}{Imports} \\
+ & Pre2023 & Post2023 & Change (\%) & Pre2023 & Post2023 & Change (\%) \\
+\midrule
+Plastics \& Rubber & 2 & 119 & +6229 & 864 & 1,648 & +91 \\
+Machinery \& Electrical & 29 & 634 & +2089 & 4,414 & 12,054 & +173 \\
+Metals \& Minerals & 6,083 & 14,994 & +147 & 840 & 2,260 & +169 \\
+Textiles & 68 & 134 & +96 & 930 & 4,875 & +424 \\
+Chemicals & 1,719 & 3,195 & +86 & 696 & 1,272 & +83 \\
+Energy & 4,993 & 8,587 & +72 & 45 & 52 & +14 \\
+Vehicles & 9 & 11 & +20 & 433 & 4,470 & +932 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Appendix C: Import Penetration Snapshot (Existing Project Table)}
+\begin{table}[H]
+\centering
+\small
+\caption{China's Share in Kazakhstan's Imports by Sector (2024, existing outputs)}
+\label{tab:penetrationtab}
+\begin{tabular}{lrrr}
+\toprule
+Sector & Total Imports (M\$) & China Imports (M\$) & China Share (\%) \\
+\midrule
+Textiles & 3,303 & 2,965 & 89.8 \\
+Vehicles & 5,477 & 4,625 & 84.5 \\
+Machinery \& Electrical & 15,777 & 12,190 & 77.3 \\
+Chemicals & 2,299 & 813 & 35.4 \\
+Plastics \& Rubber & 2,370 & 1,667 & 70.3 \\
+Metals \& Minerals & 3,621 & 2,391 & 66.0 \\
+Energy & 2,301 & 62 & 2.7 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Appendix D: Figure Index (Existing Project Assets)}
+This draft directly references the following existing figure files in the repository:
+\begin{itemize}
+\item \texttt{figures/fig1\_export\_composition\_annotated.png}
+\item \texttt{figures/fig2\_import\_composition\_annotated.png}
+\item \texttt{figures/fig4\_china\_penetration\_annotated.png}
+\item \texttt{figures/fig8\_vulnerability\_multivector\_annotated.png}
+\item \texttt{figures/fig9\_sectoral\_penetration\_heatmap\_annotated.png}
+\item \texttt{figures/fig10\_2023\_structural\_shift\_annotated.png}
+\item \texttt{figures/fig11\_hedging\_behavior\_annotated.png}
+\item \texttt{figures/fig12\_trade\_flows\_annotated.png}
+\item \texttt{figures/fig13\_trade\_balance\_annotated.png}
+\item \texttt{figures/fig14\_deficit\_ratio\_annotated.png}
+\end{itemize}
 
 \end{document}
