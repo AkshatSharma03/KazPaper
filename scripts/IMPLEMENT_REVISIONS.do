@@ -9,8 +9,17 @@ version 17.0
 clear all
 set more off
 
-* Navigate to parent directory (project root) if script is in subdirectory
-cd "`c(pwd)'"
+* Resolve and set project root
+local script_dir "`c(pwd)'"
+capture confirm file "analysis/do/RUN_ALL_ANALYSIS.do"
+if _rc == 0 {
+    local project_root "`script_dir'"
+}
+else {
+    local project_root = subinstr("`script_dir'", "/analysis/do", "", .)
+    local project_root = subinstr("`project_root'", "/scripts", "", .)
+}
+cd "`project_root'"
 
 di _newline(2) "==============================================================="
 di "  REVISION SCRIPT - ALIGNING PAPER WITH DATA"
@@ -40,32 +49,75 @@ di "Observations: " _N
 
 di _newline "Calculating all statistics from actual data..."
 
+* Initialize stats as missing; fill only when estimable
+local imp_coef .
+local imp_pval .
+local exp_coef .
+local exp_pval .
+local tot_coef .
+local tot_pval .
+local chow_f .
+local chow_p .
+local beta_kaz .
+local se_kaz .
+local p_kaz .
+local beta_chn .
+local se_chn .
+local p_chn .
+local eq_f .
+local eq_p .
+local beta_post20 .
+local p_post20 .
+local exp_beta .
+local exp_se .
+local exp_p .
+local imp_beta .
+local imp_se .
+local imp_p .
+local tdgp_coef .
+local tdgp_p .
+local covid_asym_logdiff .
+local vol_mean .
+local vol_sd .
+local vol_min .
+local vol_max .
+
 * Claim 2: China Trade Share Trends
-quietly regress chn_import_share t
-local imp_coef = _b[t]
-local imp_pval = 2 * ttail(e(df_r), abs(_b[t] / _se[t]))
+capture noisily regress chn_import_share t
+if _rc == 0 {
+    local imp_coef = _b[t]
+    local imp_pval = 2 * ttail(e(df_r), abs(_b[t] / _se[t]))
+}
 
-quietly regress chn_export_share t
-local exp_coef = _b[t]
-local exp_pval = 2 * ttail(e(df_r), abs(_b[t] / _se[t]))
+capture noisily regress chn_export_share t
+if _rc == 0 {
+    local exp_coef = _b[t]
+    local exp_pval = 2 * ttail(e(df_r), abs(_b[t] / _se[t]))
+}
 
-quietly regress chn_trade_share t
-local tot_coef = _b[t]
-local tot_pval = 2 * ttail(e(df_r), abs(_b[t] / _se[t]))
+capture noisily regress chn_trade_share t
+if _rc == 0 {
+    local tot_coef = _b[t]
+    local tot_pval = 2 * ttail(e(df_r), abs(_b[t] / _se[t]))
+}
 
 * Claim 3: Structural Break
-quietly regress trade_balance t
-local rss_r = e(rss)
-
-gen d2020 = (year >= 2020)
-gen t_d2020 = t * d2020
-quietly regress trade_balance t d2020 t_d2020
-local rss_u = e(rss)
-local df_u = e(df_r)
-local q = 2
-local chow_f = ((`rss_r' - `rss_u') / `q') / (`rss_u' / `df_u')
-local chow_p = Ftail(`q', `df_u', `chow_f')
-drop d2020 t_d2020
+capture noisily regress trade_balance t
+if _rc == 0 {
+    local rss_r = e(rss)
+    capture drop d2020 t_d2020
+    gen d2020 = (year >= 2020)
+    gen t_d2020 = t * d2020
+    capture noisily regress trade_balance t d2020 t_d2020
+    if _rc == 0 {
+        local rss_u = e(rss)
+        local df_u = e(df_r)
+        local q = 2
+        local chow_f = ((`rss_r' - `rss_u') / `q') / (`rss_u' / `df_u')
+        local chow_p = Ftail(`q', `df_u', `chow_f')
+    }
+    drop d2020 t_d2020
+}
 
 * Claim 4: GDP Elasticities
 capture noisily regress ln_trade ln_gdp_kaz ln_gdp_chn t post2020, vce(robust)
@@ -85,19 +137,6 @@ if _rc == 0 {
     local beta_post20 = _b[post2020]
     local p_post20 = 2 * ttail(e(df_r), abs(_b[post2020] / _se[post2020]))
 }
-else {
-    local beta_kaz = 999
-    local se_kaz = 999
-    local p_kaz = 999
-    local beta_chn = 999
-    local se_chn = 999
-    local p_chn = 999
-    local eq_f = 999
-    local eq_p = 999
-    local beta_post20 = 999
-    local p_post20 = 999
-}
-
 * Claim 5: Sensitivity
 capture noisily regress ln_exports ln_gdp_chn ln_gdp_kaz t, vce(robust)
 if _rc == 0 {
@@ -105,28 +144,18 @@ if _rc == 0 {
     local exp_se = _se[ln_gdp_chn]
     local exp_p = 2 * ttail(e(df_r), abs(_b[ln_gdp_chn] / _se[ln_gdp_chn]))
 }
-else {
-    local exp_beta = 999
-    local exp_se = 999
-    local exp_p = 999
-}
-
 capture noisily regress ln_imports ln_gdp_chn ln_gdp_kaz t, vce(robust)
 if _rc == 0 {
     local imp_beta = _b[ln_gdp_chn]
     local imp_se = _se[ln_gdp_chn]
     local imp_p = 2 * ttail(e(df_r), abs(_b[ln_gdp_chn] / _se[ln_gdp_chn]))
 }
-else {
-    local imp_beta = 999
-    local imp_se = 999
-    local imp_p = 999
-}
-
 * Claim 6: Vulnerability
-quietly regress trade_gdp_ratio t
-local tdgp_coef = _b[t]
-local tdgp_p = 2 * ttail(e(df_r), abs(_b[t] / _se[t]))
+capture noisily regress trade_gdp_ratio t
+if _rc == 0 {
+    local tdgp_coef = _b[t]
+    local tdgp_p = 2 * ttail(e(df_r), abs(_b[t] / _se[t]))
+}
 
 * Claim 7: COVID
 quietly summarize exports_bn if year == 2019, meanonly
@@ -138,9 +167,12 @@ local imp_2019 = r(mean)
 quietly summarize imports_bn if year == 2020, meanonly
 local imp_2020 = r(mean)
 
-local covid_exp_logdiff = 100 * ln(`exp_2020' / `exp_2019')
-local covid_imp_logdiff = 100 * ln(`imp_2020' / `imp_2019')
-local covid_asym_logdiff = `covid_imp_logdiff' - `covid_exp_logdiff'
+if missing(`exp_2019') == 0 & missing(`exp_2020') == 0 & missing(`imp_2019') == 0 & missing(`imp_2020') == 0 ///
+    & `exp_2019' > 0 & `exp_2020' > 0 & `imp_2019' > 0 & `imp_2020' > 0 {
+    local covid_exp_logdiff = 100 * ln(`exp_2020' / `exp_2019')
+    local covid_imp_logdiff = 100 * ln(`imp_2020' / `imp_2019')
+    local covid_asym_logdiff = `covid_imp_logdiff' - `covid_exp_logdiff'
+}
 
 quietly summarize export_growth, detail
 local vol_mean = r(mean)
@@ -211,7 +243,7 @@ di "Issue: Duplicate entries and missing statistics"
 di "Solution: All values calculated from data above"
 
 clear
-set obs 14
+set obs 13
 
 gen str40 test_name = ""
 gen str20 statistic_type = ""
@@ -222,6 +254,7 @@ gen str10 significance = ""
 gen str50 interpretation = ""
 
 * Helper to assign significance stars
+capture program drop assign_stars
 program define assign_stars
     args pval rownum
     if `pval' < 0.001 {

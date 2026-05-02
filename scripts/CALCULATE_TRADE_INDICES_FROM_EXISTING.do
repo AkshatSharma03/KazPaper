@@ -24,7 +24,16 @@ version 17.0
 clear all
 set more off
 
-cd "`c(pwd)'"
+local script_dir "`c(pwd)'"
+capture confirm file "analysis/do/RUN_ALL_ANALYSIS.do"
+if _rc == 0 {
+    local project_root "`script_dir'"
+}
+else {
+    local project_root = subinstr("`script_dir'", "/analysis/do", "", .)
+    local project_root = subinstr("`project_root'", "/scripts", "", .)
+}
+cd "`project_root'"
 capture mkdir "tables"
 capture mkdir "logs"
 
@@ -144,7 +153,15 @@ gen bilateral_complementarity_proxy = 100 * (1 - 0.5 * sum_abs_diff)
 gen str120 note = "Proxy uses bilateral KAZ-CHN sector shares; not canonical TCI with China global import shares."
 
 keep year bilateral_complementarity_proxy note
-duplicates drop year, force
+duplicates tag year, gen(dup_year)
+quietly count if dup_year > 0
+if r(N) > 0 {
+    di as error "Duplicate years found in TCI proxy output. Aborting to avoid silent row loss."
+    duplicates list year if dup_year > 0
+    log close
+    exit 459
+}
+drop dup_year
 sort year
 
 export delimited using "tables/trade_indices_from_existing_tci_proxy.csv", replace

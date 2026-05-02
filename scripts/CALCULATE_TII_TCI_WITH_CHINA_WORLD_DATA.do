@@ -32,7 +32,16 @@ set more off
 *--------------------------------------------------------------------------
 * SETTINGS
 *--------------------------------------------------------------------------
-cd "`c(pwd)'"
+local script_dir "`c(pwd)'"
+capture confirm file "analysis/do/RUN_ALL_ANALYSIS.do"
+if _rc == 0 {
+    local project_root "`script_dir'"
+}
+else {
+    local project_root = subinstr("`script_dir'", "/analysis/do", "", .)
+    local project_root = subinstr("`project_root'", "/scripts", "", .)
+}
+cd "`project_root'"
 
 local china_csv "chinaworldimports/DataJobID-3075788_3075788_chinaWorldImports.csv"
 local y0 2015
@@ -262,7 +271,15 @@ save `sector_panel', replace
 use `china_sector_sh', clear
 keep year sector
 append using `sector_panel'
-duplicates drop year sector, force
+duplicates tag year sector, gen(dup_key)
+quietly count if dup_key > 0
+if r(N) > 0 {
+    di as error "Duplicate year-sector keys found in combined sector panel. Aborting to avoid silent row loss."
+    duplicates list year sector if dup_key > 0
+    log close
+    exit 459
+}
+drop dup_key
 sort year sector
 save `sector_panel', replace
 
@@ -289,7 +306,15 @@ export delimited using "tables/trade_complementarity_tci_sector_detail.csv", rep
 * Year-level TCI
 preserve
 keep year tci sum_abs_diff
-duplicates drop year, force
+duplicates tag year, gen(dup_year)
+quietly count if dup_year > 0
+if r(N) > 0 {
+    di as error "Duplicate years found in year-level TCI output. Aborting to avoid silent row loss."
+    duplicates list year if dup_year > 0
+    log close
+    exit 459
+}
+drop dup_year
 sort year
 save "tables/trade_complementarity_tci_year.dta", replace
 export delimited using "tables/trade_complementarity_tci_year.csv", replace

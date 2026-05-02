@@ -29,7 +29,16 @@ set more off
 *--------------------------------------------------------------------------
 * USER SETTINGS
 *--------------------------------------------------------------------------
-cd "`c(pwd)'"
+local script_dir "`c(pwd)'"
+capture confirm file "analysis/do/RUN_ALL_ANALYSIS.do"
+if _rc == 0 {
+    local project_root "`script_dir'"
+}
+else {
+    local project_root = subinstr("`script_dir'", "/analysis/do", "", .)
+    local project_root = subinstr("`project_root'", "/scripts", "", .)
+}
+cd "`project_root'"
 
 local input_csv  "tables/trade_indices_input.csv"
 local outdir     "tables"
@@ -194,7 +203,15 @@ rename ed_y export_dependence
 rename ar_y asymmetry_ratio
 capture rename tii_y tii
 capture rename tci_y tci
-duplicates drop year, force
+duplicates tag year, gen(dup_year)
+quietly count if dup_year > 0
+if r(N) > 0 {
+    di as error "Duplicate years found in annual index output. Aborting to avoid silent row loss."
+    duplicates list year if dup_year > 0
+    log close
+    exit 459
+}
+drop dup_year
 sort year
 export delimited using "`outdir'/trade_indices_annual.csv", replace
 save "`outdir'/trade_indices_annual.dta", replace
@@ -217,7 +234,15 @@ capture confirm variable tci
 if _rc == 0 {
     preserve
     keep year tci
-    duplicates drop year, force
+    duplicates tag year, gen(dup_year)
+    quietly count if dup_year > 0
+    if r(N) > 0 {
+        di as error "Duplicate years found in TCI year output. Aborting to avoid silent row loss."
+        duplicates list year if dup_year > 0
+        log close
+        exit 459
+    }
+    drop dup_year
     sort year
     export delimited using "`outdir'/trade_indices_tci_year.csv", replace
     save "`outdir'/trade_indices_tci_year.dta", replace

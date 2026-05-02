@@ -12,10 +12,16 @@ version 17.0
 clear all
 set more off
 
-* Set working directory to this file's location
-cd "`c(pwd)'"
-
-local project_root "`c(pwd)'"
+* Resolve project root robustly (assumes this file is in analysis/do/)
+local script_dir "`c(pwd)'"
+capture confirm file "analysis/do/RUN_ALL_ANALYSIS.do"
+if _rc == 0 {
+    local project_root "`script_dir'"
+}
+else {
+    local project_root = subinstr("`script_dir'", "/analysis/do", "", .)
+}
+cd "`project_root'"
 local start_year 2015
 local end_year   2024
 
@@ -26,29 +32,29 @@ local end_year   2024
 di _newline "=== PRE-FLIGHT CHECKS: Source Data Files ==="
 
 * Check WEO file
-capture confirm file "WEO Dataset Apr 6 2026.csv"
+capture confirm file "data/raw/WEO Dataset Apr 6 2026.csv"
 if _rc != 0 {
-    di as error "MISSING: WEO Dataset Apr 6 2026.csv"
+    di as error "MISSING: data/raw/WEO Dataset Apr 6 2026.csv"
     di as error "Please download the IMF World Economic Outlook database"
     exit 601
 }
 else {
-    di as result "FOUND: WEO Dataset Apr 6 2026.csv"
+    di as result "FOUND: data/raw/WEO Dataset Apr 6 2026.csv"
 }
 
 * Check WITS file (support both naming styles seen in this project)
-local wits_file "3063878_F1AFE25F-9/DataJobID-3063878_3063878_DetailedBilateralTrade.csv"
+local wits_file "data/raw/3063878_F1AFE25F-9/DataJobID-3063878_3063878_DetailedBilateralTrade.csv"
 capture confirm file "`wits_file'"
 if _rc != 0 {
-    local wits_file "3063878_F1AFE25F-9:DataJobID-3063878_3063878_DetailedBilateralTrade.csv"
+    local wits_file "data/raw/3063878_F1AFE25F-9:DataJobID-3063878_3063878_DetailedBilateralTrade.csv"
     capture confirm file "`wits_file'"
 }
 
 if _rc != 0 {
     di as error "MISSING: WITS bilateral file not found."
     di as error "Expected one of:"
-    di as error "  1) 3063878_F1AFE25F-9/DataJobID-3063878_3063878_DetailedBilateralTrade.csv"
-    di as error "  2) 3063878_F1AFE25F-9:DataJobID-3063878_3063878_DetailedBilateralTrade.csv"
+    di as error "  1) data/raw/3063878_F1AFE25F-9/DataJobID-3063878_3063878_DetailedBilateralTrade.csv"
+    di as error "  2) data/raw/3063878_F1AFE25F-9:DataJobID-3063878_3063878_DetailedBilateralTrade.csv"
     exit 601
 }
 else {
@@ -95,7 +101,7 @@ di "==============================================================="
 
 * Always run sectoral analysis to generate figures 1-6
 di "Running sinokaz_sectoral_analysis.do..."
-do sinokaz_sectoral_analysis.do
+do analysis/do/sinokaz_sectoral_analysis.do
 
 capture confirm file "sectoral_trade_clean.dta"
 if _rc == 0 {
@@ -140,10 +146,10 @@ di "  STEP 2: MAIN BILATERAL ANALYSIS (IMPROVED METHODS)"
 di "==============================================================="
 
 local strict_step2_validation 1
-capture confirm file "sinokaz_analysis_improved.do"
+capture confirm file "analysis/do/sinokaz_analysis_improved.do"
 if _rc == 0 {
     di "Running sinokaz_analysis_improved.do..."
-    do sinokaz_analysis_improved.do
+    do analysis/do/sinokaz_analysis_improved.do
 }
 else {
     local strict_step2_validation 0
@@ -206,10 +212,10 @@ di _newline(2) "==============================================================="
 di "  STEP 3: SUMMARY TABLES (IMPROVED METHODS)"
 di "==============================================================="
 
-capture confirm file "sinokaz_summary_improved.do"
+capture confirm file "analysis/do/sinokaz_summary_improved.do"
 if _rc == 0 {
     di "Running sinokaz_summary_improved.do..."
-    do sinokaz_summary_improved.do
+    do analysis/do/sinokaz_summary_improved.do
 }
 else {
     di as error "MISSING SCRIPT: sinokaz_summary_improved.do"
@@ -308,7 +314,7 @@ di "  STEP 4: THEORY VISUALIZATIONS"
 di "==============================================================="
 
 di "Running sinokaz_theory_visualizations.do..."
-do sinokaz_theory_visualizations.do
+do analysis/do/sinokaz_theory_visualizations.do
 
 * Validate outputs (fig10 and fig11 handled separately)
 local step4_figs "fig7_asymmetry_index.png fig8_vulnerability_multivector.png fig9_sectoral_penetration_heatmap.png"

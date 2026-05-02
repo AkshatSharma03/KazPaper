@@ -10,7 +10,16 @@ version 17.0
 clear all
 set more off
 
-cd "`c(pwd)'"
+local script_dir "`c(pwd)'"
+capture confirm file "analysis/do/RUN_ALL_ANALYSIS.do"
+if _rc == 0 {
+    local project_root "`script_dir'"
+}
+else {
+    local project_root = subinstr("`script_dir'", "/analysis/do", "", .)
+    local project_root = subinstr("`project_root'", "/scripts", "", .)
+}
+cd "`project_root'"
 capture mkdir "logs"
 capture mkdir "tables"
 
@@ -29,6 +38,7 @@ di "==============================================================="
 *--------------------------------------------------------------------------
 
 tempfile base old
+tempfile weo_gdp weo_kaz weo_chn wits_world_exp wits_world_imp
 
 * Prefer freshly generated Step 2 panel
 capture confirm file "kaz_china_trade_panel.dta"
@@ -112,6 +122,139 @@ else {
     use `base', clear
 }
 
+* Fill GDP and Kazakhstan world-trade totals from raw sources when missing
+capture confirm variable gdp_kaz
+if _rc != 0 gen gdp_kaz = .
+capture confirm variable gdp_chn
+if _rc != 0 gen gdp_chn = .
+capture confirm variable kaz_exports_bn
+if _rc != 0 gen kaz_exports_bn = .
+capture confirm variable kaz_imports_bn
+if _rc != 0 gen kaz_imports_bn = .
+capture confirm variable kaz_total_trade_wb
+if _rc != 0 gen kaz_total_trade_wb = .
+
+preserve
+capture confirm file "data/raw/WEO Dataset Apr 6 2026.csv"
+if _rc == 0 {
+    capture noisily import delimited "data/raw/WEO Dataset Apr 6 2026.csv", ///
+        clear varnames(1) case(preserve) bindquotes(strict)
+    if _rc == 0 {
+        capture unab c2015 : *2015
+        capture unab c2016 : *2016
+        capture unab c2017 : *2017
+        capture unab c2018 : *2018
+        capture unab c2019 : *2019
+        capture unab c2020 : *2020
+        capture unab c2021 : *2021
+        capture unab c2022 : *2022
+        capture unab c2023 : *2023
+        capture unab c2024 : *2024
+
+        local have_year_cols = 1
+        foreach yc in c2015 c2016 c2017 c2018 c2019 c2020 c2021 c2022 c2023 c2024 {
+            if "``yc''" == "" local have_year_cols = 0
+        }
+
+        if `have_year_cols' == 1 {
+            keep if inlist(COUNTRY, "Kazakhstan", "China")
+            keep if strpos(INDICATOR, "Gross domestic product (GDP), Current prices, US dollar") > 0
+            keep COUNTRY `c2015' `c2016' `c2017' `c2018' `c2019' `c2020' `c2021' `c2022' `c2023' `c2024'
+            rename (`c2015' `c2016' `c2017' `c2018' `c2019' `c2020' `c2021' `c2022' `c2023' `c2024') ///
+                   (y2015 y2016 y2017 y2018 y2019 y2020 y2021 y2022 y2023 y2024)
+            reshape long y, i(COUNTRY) j(year)
+            rename y gdp_usd
+            keep if inrange(year, `start_year', `end_year')
+            gen gdp_bn = gdp_usd / 1e9 if gdp_usd > 0
+            keep COUNTRY year gdp_bn
+            save `weo_gdp', replace
+
+            use `weo_gdp', clear
+            keep if COUNTRY == "Kazakhstan"
+            keep year gdp_bn
+            rename gdp_bn gdp_kaz
+            save `weo_kaz', replace
+
+            use `weo_gdp', clear
+            keep if COUNTRY == "China"
+            keep year gdp_bn
+            rename gdp_bn gdp_chn
+            save `weo_chn', replace
+        }
+        else {
+            di as error "WARN: Could not identify WEO year columns; skipping WEO GDP enrichment."
+        }
+    }
+    else {
+        di as error "WARN: WEO import failed; skipping WEO GDP enrichment."
+    }
+}
+restore
+
+capture confirm file `weo_kaz'
+if _rc == 0 merge 1:1 year using `weo_kaz', nogen update replace
+capture confirm file `weo_chn'
+if _rc == 0 merge 1:1 year using `weo_chn', nogen update replace
+
+* Save main dataset before loading WITS
+save `base', replace
+
+capture confirm file "sectoral_trade_clean.dta"
+if _rc == 0 {
+    use "sectoral_trade_clean.dta", clear
+}
+else {
+    local wits_file "data/raw/3063878_F1AFE25F-9/DataJobID-3063878_3063878_DetailedBilateralTrade.csv"
+    capture confirm file "`wits_file'"
+    if _rc != 0 {
+        local wits_file "data/raw/3063878_F1AFE25F-9:DataJobID-3063878_3063878_DetailedBilateralTrade.csv"
+    }
+    capture confirm file "`wits_file'"
+    if _rc == 0 {
+        import delimited "`wits_file'", clear varnames(1) case(preserve)
+        rename ReporterISO3 reporter
+        rename PartnerISO3 partner
+        rename Year year
+        rename TradeFlowCode flow_code
+        rename TradeValuein1000USD value_usd
+        gen value_million = value_usd / 1000
+    }
+}
+
+capture confirm variable reporter
+if _rc == 0 {
+    keep if reporter == "KAZ"
+    keep if inrange(year, `start_year', `end_year')
+    drop if inlist(partner, "WLD", "EU-UK", "ECS")
+
+    * Process exports
+    preserve
+    keep if flow_code == 6
+    collapse (sum) value_million, by(year)
+    gen kaz_exports_bn = value_million / 1000
+    keep year kaz_exports_bn
+    save `wits_world_exp', replace
+    restore
+
+    * Process imports
+    preserve
+    keep if flow_code == 5
+    collapse (sum) value_million, by(year)
+    gen kaz_imports_bn = value_million / 1000
+    keep year kaz_imports_bn
+    save `wits_world_imp', replace
+    restore
+}
+
+* Restore main dataset
+use `base', clear
+
+capture confirm file `wits_world_exp'
+if _rc == 0 merge 1:1 year using `wits_world_exp', nogen update replace
+capture confirm file `wits_world_imp'
+if _rc == 0 merge 1:1 year using `wits_world_imp', nogen update replace
+replace kaz_total_trade_wb = kaz_exports_bn + kaz_imports_bn if missing(kaz_total_trade_wb) & !missing(kaz_exports_bn) & !missing(kaz_imports_bn)
+
 sort year
 isid year
 
@@ -122,20 +265,44 @@ gen ln_exports = ln(exports_bn) if exports_bn > 0
 gen ln_imports = ln(imports_bn) if imports_bn > 0
 
 capture confirm variable ln_gdp_kaz
-if _rc != 0 gen ln_gdp_kaz = ln(gdp_kaz) if gdp_kaz > 0
+if _rc != 0 {
+    capture confirm variable gdp_kaz
+    if _rc != 0 gen gdp_kaz = .
+    gen ln_gdp_kaz = ln(gdp_kaz) if gdp_kaz > 0
+}
 capture confirm variable ln_gdp_chn
-if _rc != 0 gen ln_gdp_chn = ln(gdp_chn) if gdp_chn > 0
+if _rc != 0 {
+    capture confirm variable gdp_chn
+    if _rc != 0 gen gdp_chn = .
+    gen ln_gdp_chn = ln(gdp_chn) if gdp_chn > 0
+}
 
 capture confirm variable chn_export_share
-if _rc != 0 gen chn_export_share = 100 * exports_bn / kaz_exports_bn if kaz_exports_bn > 0
+if _rc != 0 {
+    capture confirm variable kaz_exports_bn
+    if _rc != 0 gen kaz_exports_bn = .
+    gen chn_export_share = 100 * exports_bn / kaz_exports_bn if kaz_exports_bn > 0
+}
 capture confirm variable chn_import_share
-if _rc != 0 gen chn_import_share = 100 * imports_bn / kaz_imports_bn if kaz_imports_bn > 0
+if _rc != 0 {
+    capture confirm variable kaz_imports_bn
+    if _rc != 0 gen kaz_imports_bn = .
+    gen chn_import_share = 100 * imports_bn / kaz_imports_bn if kaz_imports_bn > 0
+}
 capture confirm variable chn_trade_share
-if _rc != 0 gen chn_trade_share = 100 * total_trade_bn / kaz_total_trade_wb if kaz_total_trade_wb > 0
+if _rc != 0 {
+    capture confirm variable kaz_total_trade_wb
+    if _rc != 0 gen kaz_total_trade_wb = .
+    gen chn_trade_share = 100 * total_trade_bn / kaz_total_trade_wb if kaz_total_trade_wb > 0
+}
 capture confirm variable share_gap
 if _rc != 0 gen share_gap = chn_import_share - chn_export_share
 capture confirm variable trade_gdp_ratio
-if _rc != 0 gen trade_gdp_ratio = 100 * total_trade_bn / gdp_kaz if gdp_kaz > 0
+if _rc != 0 {
+    capture confirm variable gdp_kaz
+    if _rc != 0 gen gdp_kaz = .
+    gen trade_gdp_ratio = 100 * total_trade_bn / gdp_kaz if gdp_kaz > 0
+}
 
 tsset year
 save "sinokaz_summary_master.dta", replace

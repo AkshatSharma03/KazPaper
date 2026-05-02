@@ -8,7 +8,16 @@ version 17.0
 clear all
 set more off
 
-cd "`c(pwd)'"
+local script_dir "`c(pwd)'"
+capture confirm file "analysis/do/RUN_ALL_ANALYSIS.do"
+if _rc == 0 {
+    local project_root "`script_dir'"
+}
+else {
+    local project_root = subinstr("`script_dir'", "/analysis/do", "", .)
+    local project_root = subinstr("`project_root'", "/scripts", "", .)
+}
+cd "`project_root'"
 capture mkdir "figures"
 
 di _newline(2) "==============================================================="
@@ -249,4 +258,3 @@ di "Remaining figures (7-14) require similar updates in:"
 di "  - sinokaz_theory_visualizations.do"
 di "  - sinokaz_analysis_improved.do"
 di ""
-

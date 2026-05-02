@@ -19,9 +19,10 @@ cd "`project_root'"
 
 capture mkdir "figures"
 capture mkdir "tables"
+capture mkdir "logs"
 
 capture log close
-log using "sinokaz_theory_viz.log", replace
+log using "logs/sinokaz_theory_viz.log", replace text
 
 /*===========================================================================
   CHECK DEPENDENCIES

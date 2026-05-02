@@ -8,17 +8,27 @@ version 17.0
 clear all
 set more off
 
-* Set working directory
-cd "`c(pwd)'"
+* Resolve and set project root
+local script_dir "`c(pwd)'"
+capture confirm file "analysis/do/RUN_ALL_ANALYSIS.do"
+if _rc == 0 {
+    local project_root "`script_dir'"
+}
+else {
+    local project_root = subinstr("`script_dir'", "/analysis/do", "", .)
+    local project_root = subinstr("`project_root'", "/scripts", "", .)
+}
+cd "`project_root'"
 
 * Create output directories
 capture mkdir "figures"
 capture mkdir "tables"
 capture mkdir "sectoral_data"
+capture mkdir "logs"
 
 * Start logging
 capture log close
-log using "sinokaz_sectoral_analysis.log", replace
+log using "logs/sinokaz_sectoral_analysis.log", replace text
 
 /*===========================================================================
   SECTION 1: IMPORT AND CLEAN WITS DATA
@@ -29,18 +39,18 @@ di "  SECTION 1: DATA IMPORT AND CLEANING"
 di "==============================================================="
 
 * Import WITS detailed bilateral trade data
-local wits_file "3063878_F1AFE25F-9/DataJobID-3063878_3063878_DetailedBilateralTrade.csv"
+local wits_file "data/raw/3063878_F1AFE25F-9/DataJobID-3063878_3063878_DetailedBilateralTrade.csv"
 capture confirm file "`wits_file'"
 if _rc != 0 {
-    local wits_file "3063878_F1AFE25F-9:DataJobID-3063878_3063878_DetailedBilateralTrade.csv"
+    local wits_file "data/raw/3063878_F1AFE25F-9:DataJobID-3063878_3063878_DetailedBilateralTrade.csv"
     capture confirm file "`wits_file'"
 }
 
 if _rc != 0 {
     di as error "WITS source file not found."
     di as error "Expected either:"
-    di as error "  1) 3063878_F1AFE25F-9/DataJobID-3063878_3063878_DetailedBilateralTrade.csv"
-    di as error "  2) 3063878_F1AFE25F-9:DataJobID-3063878_3063878_DetailedBilateralTrade.csv"
+    di as error "  1) data/raw/3063878_F1AFE25F-9/DataJobID-3063878_3063878_DetailedBilateralTrade.csv"
+    di as error "  2) data/raw/3063878_F1AFE25F-9:DataJobID-3063878_3063878_DetailedBilateralTrade.csv"
     exit 601
 }
 

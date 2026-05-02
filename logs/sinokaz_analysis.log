@@ -2,7 +2,7 @@
       name:  <unnamed>
        log:  /Users/akshatsharma/Documents/KazakhIrPapaper/logs/sinokaz_analysis.log
   log type:  text
- opened on:  18 Apr 2026, 18:08:34
+ opened on:   2 May 2026, 01:55:04
 
 . 
 . local start_year 2015
@@ -133,7 +133,6 @@ Time variable: year, 2015 to 2024
 
 . 
 . save "kaz_china_trade_panel.dta", replace
-(file kaz_china_trade_panel.dta not found)
 file kaz_china_trade_panel.dta saved
 
 . di as result "Created: kaz_china_trade_panel.dta"
@@ -340,5 +339,5 @@ Core outputs generated:
       name:  <unnamed>
        log:  /Users/akshatsharma/Documents/KazakhIrPapaper/logs/sinokaz_analysis.log
   log type:  text
- closed on:  18 Apr 2026, 18:08:36
+ closed on:   2 May 2026, 01:55:07
 ----------------------------------------------------------------------------------------------------

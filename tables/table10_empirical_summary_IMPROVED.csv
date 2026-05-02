@@ -2,10 +2,10 @@ claim,finding,estimate,se,pvalue,sig,ci_95,caveat
 Trade Evolution,Exports 2015 to 2024,10.96 to 29.79,,,,,Descriptive
 Trade Evolution,Imports 2015 to 2024,10.18 to 30.31,,,,,Descriptive
 Trade Evolution,First deficit year,2023,,,,,Year-based
-Share Trend,China import share trend,0.6269,,.3215798873655044,,,OLS small-N
-Share Trend,China export share trend,0.5909,,.0027491257697215,**,,OLS small-N
-Share Trend,China total share trend,0.6252,,.0530513351515381,dagger,,OLS small-N
+Share Trend,China import share trend,0.8683,,.5690706165628739,,,OLS small-N
+Share Trend,China export share trend,0.4472,,.2534411858913383,,,OLS small-N
+Share Trend,China total share trend,0.8877,,.36405105739551,,,OLS small-N
 Break Test,Trade balance structural break,3.8858,,.0826974008857596,dagger,,2020 Chow-style
-Elasticity,ln_trade on ln_gdp_kaz,0.5655,.9085418614750823,.5609547735485559,,,Robust OLS
-Elasticity,ln_trade on ln_gdp_chn,-2.4342,2.811766786320533,.4262284067212403,,,Robust OLS
-Vulnerability,trade_gdp_ratio trend,1.4246,,.0273994439281006,*,,OLS small-N
+Elasticity,ln_trade on ln_gdp_kaz,.,,,,,Robust OLS
+Elasticity,ln_trade on ln_gdp_chn,.,,,,,Robust OLS
+Vulnerability,trade_gdp_ratio trend,.,,,,,OLS small-N
