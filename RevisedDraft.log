@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2023.2.1)  6 MAY 2026 08:05
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2023.2.1)  6 MAY 2026 09:21
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -407,23 +407,13 @@ e
 [1
 
 {/usr/local/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-[2] [3] [4] [5]
-
-LaTeX Warning: Reference `tab:tai_annual' on page 6 undefined on input line 107
-.
-
-[6] [7
+[2] [3] [4] [5] [6] [7
 pdfTeX warning (ext4): destination with the same identifier (name{table.1}) has
  been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
 l.144 
-      ]
-
-LaTeX Warning: Reference `tab:ols_results' on page 8 undefined on input line 14
-9.
-
-[8
+      ] [8
 pdfTeX warning (ext4): destination with the same identifier (name{table.2}) has
  been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
@@ -435,177 +425,188 @@ Overfull \hbox (8.25049pt too wide) in paragraph at lines 190--191
 u-ment cat-e-gories, a con-sis-tent pat-tern emerges:
  []
 
-[10]
-<figures/fig12_trade_flows_annotated.png, id=180, 2007.5pt x 1741.50626pt>
+[10] [11]
+Overfull \hbox (107.67236pt too wide) in paragraph at lines 210--227
+ [][] 
+ []
+
+[12
+pdfTeX warning (ext4): destination with the same identifier (name{table.3}) has
+ been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.260 \end{table}
+                 ] [13
+pdfTeX warning (ext4): destination with the same identifier (name{table.4}) has
+ been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.269 
+      ] [14] [15]
+<figures/fig12_trade_flows_annotated.png, id=237, 2007.5pt x 1741.50626pt>
 File: figures/fig12_trade_flows_annotated.png Graphic file (type png)
 <use figures/fig12_trade_flows_annotated.png>
 Package pdftex.def Info: figures/fig12_trade_flows_annotated.png  used on input
- line 203.
+ line 310.
 (pdftex.def)             Requested size: 432.17375pt x 374.89487pt.
- [11] [12
+ [16] [17
 pdfTeX warning (ext4): destination with the same identifier (name{figure.1}) ha
 s been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.211 
+l.318 
        <./figures/fig12_trade_flows_annotated.png (PNG copy)>]
-<figures/fig8_vulnerability_multivector_annotated.png, id=193, 2007.5pt x 1741.
+<figures/fig8_vulnerability_multivector_annotated.png, id=249, 2007.5pt x 1741.
 50626pt>
 File: figures/fig8_vulnerability_multivector_annotated.png Graphic file (type p
 ng)
 <use figures/fig8_vulnerability_multivector_annotated.png>
 Package pdftex.def Info: figures/fig8_vulnerability_multivector_annotated.png  
-used on input line 214.
+used on input line 321.
 (pdftex.def)             Requested size: 432.17375pt x 374.89487pt.
-<figures/fig11_hedging_behavior_annotated.png, id=194, 2007.5pt x 1741.50626pt>
+<figures/fig11_hedging_behavior_annotated.png, id=250, 2007.5pt x 1741.50626pt>
 
 File: figures/fig11_hedging_behavior_annotated.png Graphic file (type png)
 <use figures/fig11_hedging_behavior_annotated.png>
 Package pdftex.def Info: figures/fig11_hedging_behavior_annotated.png  used on 
-input line 221.
+input line 328.
 (pdftex.def)             Requested size: 432.17375pt x 374.89487pt.
- [13
+ [18
 pdfTeX warning (ext4): destination with the same identifier (name{figure.2}) ha
 s been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.225 
+l.332 
        <./figures/fig8_vulnerability_multivector_annotated.png (PNG copy)>]
-[14
+[19
 pdfTeX warning (ext4): destination with the same identifier (name{figure.3}) ha
 s been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.248 
+l.355 
        <./figures/fig11_hedging_behavior_annotated.png (PNG copy)>]
-<figures/fig10_2023_structural_shift_annotated.png, id=208, 2007.5pt x 1741.506
+<figures/fig10_2023_structural_shift_annotated.png, id=265, 2007.5pt x 1741.506
 26pt>
 File: figures/fig10_2023_structural_shift_annotated.png Graphic file (type png)
 
 <use figures/fig10_2023_structural_shift_annotated.png>
 Package pdftex.def Info: figures/fig10_2023_structural_shift_annotated.png  use
-d on input line 260.
+d on input line 367.
 (pdftex.def)             Requested size: 432.17375pt x 374.89487pt.
- [15
-pdfTeX warning (ext4): destination with the same identifier (name{table.3}) has
+ [20
+pdfTeX warning (ext4): destination with the same identifier (name{table.5}) has
  been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.264 
-      ] [16
+l.371 
+      ] [21
 pdfTeX warning (ext4): destination with the same identifier (name{figure.4}) ha
 s been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.268 
+l.375 
        <./figures/fig10_2023_structural_shift_annotated.png (PNG copy)>]
-<figures/fig1_export_composition_annotated.png, id=222, 2007.5pt x 1741.50626pt
+<figures/fig1_export_composition_annotated.png, id=278, 2007.5pt x 1741.50626pt
 >
 File: figures/fig1_export_composition_annotated.png Graphic file (type png)
 <use figures/fig1_export_composition_annotated.png>
 Package pdftex.def Info: figures/fig1_export_composition_annotated.png  used on
- input line 271.
+ input line 378.
 (pdftex.def)             Requested size: 432.17375pt x 374.89487pt.
-<figures/fig2_import_composition_annotated.png, id=223, 2007.5pt x 1741.50626pt
+<figures/fig2_import_composition_annotated.png, id=279, 2007.5pt x 1741.50626pt
 >
 File: figures/fig2_import_composition_annotated.png Graphic file (type png)
 <use figures/fig2_import_composition_annotated.png>
 Package pdftex.def Info: figures/fig2_import_composition_annotated.png  used on
- input line 278.
+ input line 385.
 (pdftex.def)             Requested size: 432.17375pt x 374.89487pt.
 
-[17
+[22
 pdfTeX warning (ext4): destination with the same identifier (name{figure.5}) ha
 s been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.282 
-       <./figures/fig1_export_composition_annotated.png (PNG copy)>] [18
+l.389 
+       <./figures/fig1_export_composition_annotated.png (PNG copy)>] [23
 pdfTeX warning (ext4): destination with the same identifier (name{figure.6}) ha
 s been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.288 
+l.395 
        <./figures/fig2_import_composition_annotated.png (PNG copy)>]
-<figures/fig13_trade_balance_annotated.png, id=235, 2007.5pt x 1741.50626pt>
+<figures/fig13_trade_balance_annotated.png, id=291, 2007.5pt x 1741.50626pt>
 File: figures/fig13_trade_balance_annotated.png Graphic file (type png)
 <use figures/fig13_trade_balance_annotated.png>
 Package pdftex.def Info: figures/fig13_trade_balance_annotated.png  used on inp
-ut line 291.
+ut line 398.
 (pdftex.def)             Requested size: 432.17375pt x 374.89487pt.
- [19]
-<figures/fig14_deficit_ratio_annotated.png, id=242, 2007.5pt x 1741.50626pt>
+ [24]
+<figures/fig14_deficit_ratio_annotated.png, id=298, 2007.5pt x 1741.50626pt>
 File: figures/fig14_deficit_ratio_annotated.png Graphic file (type png)
 <use figures/fig14_deficit_ratio_annotated.png>
 Package pdftex.def Info: figures/fig14_deficit_ratio_annotated.png  used on inp
-ut line 298.
+ut line 405.
 (pdftex.def)             Requested size: 432.17375pt x 374.89487pt.
 
-[20
+[25
 pdfTeX warning (ext4): destination with the same identifier (name{figure.7}) ha
 s been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.302 
-       <./figures/fig13_trade_balance_annotated.png (PNG copy)>] [21
+l.409 
+       <./figures/fig13_trade_balance_annotated.png (PNG copy)>] [26
 pdfTeX warning (ext4): destination with the same identifier (name{figure.8}) ha
 s been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.311 
+l.418 
        <./figures/fig14_deficit_ratio_annotated.png (PNG copy)>]
-<figures/fig9_sectoral_penetration_heatmap_annotated.png, id=254, 2007.5pt x 17
+<figures/fig9_sectoral_penetration_heatmap_annotated.png, id=311, 2007.5pt x 17
 41.50626pt>
 File: figures/fig9_sectoral_penetration_heatmap_annotated.png Graphic file (typ
 e png)
 <use figures/fig9_sectoral_penetration_heatmap_annotated.png>
 Package pdftex.def Info: figures/fig9_sectoral_penetration_heatmap_annotated.pn
-g  used on input line 318.
+g  used on input line 425.
 (pdftex.def)             Requested size: 432.17375pt x 374.89487pt.
- [22]
-<figures/fig4_china_penetration_annotated.png, id=260, 2007.5pt x 1741.50626pt>
+ [27]
+<figures/fig4_china_penetration_annotated.png, id=317, 2007.5pt x 1741.50626pt>
 
 File: figures/fig4_china_penetration_annotated.png Graphic file (type png)
 <use figures/fig4_china_penetration_annotated.png>
 Package pdftex.def Info: figures/fig4_china_penetration_annotated.png  used on 
-input line 325.
+input line 432.
 (pdftex.def)             Requested size: 432.17375pt x 374.89487pt.
- [23
+ [28
 pdfTeX warning (ext4): destination with the same identifier (name{figure.9}) ha
 s been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.329 
+l.436 
        <./figures/fig9_sectoral_penetration_heatmap_annotated.png (PNG copy)>]
-[24
+[29
 pdfTeX warning (ext4): destination with the same identifier (name{figure.10}) h
 as been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.333 
-       <./figures/fig4_china_penetration_annotated.png (PNG copy)>] [25]
-LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 3
-53.
+l.440 
+       <./figures/fig4_china_penetration_annotated.png (PNG copy)>] [30]
+LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 4
+60.
 
 (/usr/local/texlive/2022/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 2019/12/16 v2.5j Standard LaTeX font definitions
-) [26] [27]
-[28] (./RevisedDraft.aux)
-
-LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
+) [31] [32]
+[33] (./RevisedDraft.aux)
 Package rerunfilecheck Info: File `RevisedDraft.out' has not changed.
-(rerunfilecheck)             Checksum: 1A0A830CA3F1C844C7309DD921CF07C0;5410.
+(rerunfilecheck)             Checksum: C3C6F6970CE1A4D4EB75B3D5960B7C81;7326.
  ) 
 Here is how much of TeX's memory you used:
- 10235 strings out of 478268
- 160791 string characters out of 5846348
- 459925 words of memory out of 5000000
- 28221 multiletter control sequences out of 15000+600000
- 484325 words of font info for 60 fonts, out of 8000000 for 9000
+ 10262 strings out of 478268
+ 161108 string characters out of 5846348
+ 460270 words of memory out of 5000000
+ 28232 multiletter control sequences out of 15000+600000
+ 486642 words of font info for 63 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  60i,10n,63p,1954b,393s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}
@@ -618,21 +619,23 @@ cal/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/loca
 l/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/t
 exlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/te
 xlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texl
-ive/2022/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr/local/texliv
-e/2022/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></usr/local/texlive/
-2022/texmf-dist/fonts/type1/public/cm-super/sfbx1728.pfb></usr/local/texlive/20
-22/texmf-dist/fonts/type1/public/cm-super/sfrm0800.pfb></usr/local/texlive/2022
-/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/local/texlive/2022/t
-exmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb></usr/local/texlive/2022/tex
-mf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2022/texmf
--dist/fonts/type1/public/cm-super/sfti1000.pfb></usr/local/texlive/2022/texmf-d
-ist/fonts/type1/public/cm-super/sfti1095.pfb></usr/local/texlive/2022/texmf-dis
-t/fonts/type1/public/cm-super/sfti1200.pfb></usr/local/texlive/2022/texmf-dist/
-fonts/type1/public/cm-super/sftt1200.pfb>
-Output written on RevisedDraft.pdf (28 pages, 2161754 bytes).
+ive/2022/texmf-dist/fonts/type1/public/cm-super/sfbx1095.pfb></usr/local/texliv
+e/2022/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr/local/texlive/
+2022/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></usr/local/texlive/20
+22/texmf-dist/fonts/type1/public/cm-super/sfbx1728.pfb></usr/local/texlive/2022
+/texmf-dist/fonts/type1/public/cm-super/sfrm0700.pfb></usr/local/texlive/2022/t
+exmf-dist/fonts/type1/public/cm-super/sfrm0800.pfb></usr/local/texlive/2022/tex
+mf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/local/texlive/2022/texmf
+-dist/fonts/type1/public/cm-super/sfrm1095.pfb></usr/local/texlive/2022/texmf-d
+ist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2022/texmf-dis
+t/fonts/type1/public/cm-super/sfti1000.pfb></usr/local/texlive/2022/texmf-dist/
+fonts/type1/public/cm-super/sfti1095.pfb></usr/local/texlive/2022/texmf-dist/fo
+nts/type1/public/cm-super/sfti1200.pfb></usr/local/texlive/2022/texmf-dist/font
+s/type1/public/cm-super/sftt1200.pfb>
+Output written on RevisedDraft.pdf (33 pages, 2221419 bytes).
 PDF statistics:
- 406 PDF objects out of 1000 (max. 8388607)
- 322 compressed objects within 4 object streams
- 81 named destinations out of 1000 (max. 500000)
- 251 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 471 PDF objects out of 1000 (max. 8388607)
+ 378 compressed objects within 4 object streams
+ 94 named destinations out of 1000 (max. 500000)
+ 299 words of extra memory for PDF output out of 10000 (max. 10000000)
 

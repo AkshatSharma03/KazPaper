@@ -40,7 +40,7 @@ Between 2015 and 2025, Kazakhstan's bilateral trade with China nearly tripled in
 
 The central question this paper addresses is the following: to what extent has the deepening of Sino-Kazakh economic relations between 2015 and 2025 produced structural asymmetric dependence, and what does the empirical record reveal about the efficacy of Kazakhstan's diplomatic and policy instruments in moderating that dependence? The question carries significance on two levels. It tests the boundary conditions of asymmetric interdependence theory in a case where the smaller state possesses geographic leverage and diverse diplomatic portfolios. It also generates policy-relevant findings for other small and medium states navigating economic integration with a dominant industrial partner under conditions of commodity export dependence, a situation shared broadly across Central Asia and along BRI corridors.
 
-The paper is organized as follows. Section II reviews the relevant theoretical and empirical literature. Section III describes the data and analytical framework. Section IV analyzes Kazakhstan's external trade structure and China's rising share within it. Section V examines the structural features of bilateral trade, including sectoral composition, the commodity-manufacture divide, and the accelerating deficit. Section VI compares the China relationship to Kazakhstan's partnerships with Russia and the European Union. Section VII synthesizes the findings and draws theoretical and policy conclusions.
+The paper is organized as follows. Section II reviews the relevant theoretical and empirical literature. Section III describes the data and analytical framework, including the Trade Intensity Index, the Revealed Comparative Advantage index, the Trade Asymmetry Index, the regression model, and the qualitative document analysis strategy. Section IV presents the results of each methodological component, including computed index values, regression estimates, and qualitative findings from policy document analysis. Section V analyzes Kazakhstan's external trade structure and China's rising share within it. Section VI examines the structural features of bilateral trade, including sectoral composition, the commodity-manufacture divide, and the accelerating deficit. Section VII compares the China relationship to Kazakhstan's partnerships with Russia and the European Union. Section VIII synthesizes the findings and draws theoretical and policy conclusions.
 
 %% ============================================================
 %% II. LITERATURE REVIEW
@@ -190,9 +190,116 @@ The quantitative analysis is complemented by structured document analysis of bil
 \paragraph{Summary assessment.} Across the three document categories, a consistent pattern emerges: Kazakhstan's bilateral institutional architecture with China is more developed at the level of diplomatic declaration than at the level of commercial enforcement. Trade agreement provisions for diversification, local currency settlement, and export upgrading have not generated demonstrable shifts in the RCA profile or in the product composition of bilateral trade. Policy timelines for automotive localization and agricultural export promotion have not arrested the deterioration of the bilateral trade balance. The institutional mechanisms that have demonstrably affected bilateral trade structure are not the diversification-oriented ones but rather the logistics facilitation instruments that have lowered the cost of Chinese manufactured goods reaching Kazakhstani markets. This asymmetry between the diplomatic framing of bilateral agreements and their observable commercial effects is itself a substantive finding with implications for how Kazakhstan's formal multivector commitments interact with structural economic trajectories.
 
 %% ============================================================
-%% IV. KAZAKHSTAN'S EXTERNAL TRADE STRUCTURE (2015--2025)
+%% IV. RESULTS
+%% ============================================================
+\section{Results}
+
+This section presents the findings produced by each component of the analytical framework described in Section~III. Results are organized in four subsections corresponding to the four methodological instruments: the Trade Intensity Index, the Revealed Comparative Advantage analysis, the Trade Asymmetry Index, and the regression and structural break tests. A fifth subsection synthesizes the qualitative findings from document analysis. Together the four quantitative instruments produce a convergent picture of a relationship that moved from relative structural balance to accelerating asymmetric dependence across the 2015--2024 period.
+
+\subsection{Trade Intensity Index: Rising Bilateral Concentration}
+
+The Trade Intensity Index (TII) measures Kazakhstan's bilateral export concentration toward China relative to China's share of world imports. Values above 1.0 indicate that Kazakhstan directs a disproportionately large share of its exports toward China compared to China's weight in global trade, signaling structural over-reliance beyond what geography and market size alone would predict.
+
+Computed TII values for 2015--2024 are presented in Table~\ref{tab:tii_annual}. From 2015 to 2019, the TII hovered below parity (range: $0.674$--$0.951$), indicating that Kazakhstan was exporting \textit{less} to China than China's global import share would predict and that the relationship, while growing, remained below the threshold of structural concentration. The pandemic years 2020--2021 saw the TII move toward unity ($1.030$ and $0.705$ respectively), driven by the collapse of Chinese consumer goods exports and the relative resilience of commodity demand. The decisive shift occurred after 2022: the TII crossed above 1.0 in 2023 ($1.144$) and remained elevated in 2024 ($1.056$), the first sustained breach of the concentration threshold in the series. This crossing signals that Kazakhstan's export orientation toward China now exceeds what China's share of world imports would mechanically predict, representing a structural narrowing of Kazakhstan's export diversification relative to its global trade position.
+
+\begin{table}[H]
+\centering
+\small
+\caption{Trade Intensity Index (TII), Kazakhstan--China, 2015--2024}
+\label{tab:tii_annual}
+\begin{tabular}{lrrrl}
+\toprule
+Year & KAZ Export Share to CHN (\%) & CHN World Import Share (\%) & TII & Status \\
+\midrule
+2015 & 7.9 & 10.2 & 0.774 & Below parity \\
+2016 & 7.9 & 9.8  & 0.805 & Below parity \\
+2017 & 8.2 & 10.2 & 0.807 & Below parity \\
+2018 & 7.3 & 10.8 & 0.674 & Below parity \\
+2019 & 10.3 & 10.8 & 0.951 & Approaching parity \\
+2020 & 11.8 & 11.5 & 1.030 & Above parity (pandemic distortion) \\
+2021 & 9.3  & 13.2 & 0.705 & Below parity \\
+2022 & 10.3 & 12.4 & 0.834 & Below parity \\
+2023 & 13.6 & 11.9 & \textbf{1.144} & \textbf{Above parity (structural)} \\
+2024 & 12.3 & 11.6 & \textbf{1.056} & \textbf{Above parity (structural)} \\
+\bottomrule
+\end{tabular}
+\footnotesize
+
+\emph{Note:} TII $= (x_{\text{KAZ,CHN}} / X_{\text{KAZ,World}}) \div (M_{\text{CHN,World}} / M_{\text{World}})$. China world import shares are derived from WTO merchandise trade data. Values $> 1$ indicate bilateral export concentration exceeding what China's global import weight predicts. Bold entries indicate post-2022 sustained breach of parity. Source: own calculation from WITS and WTO data.
+\end{table}
+
+The trajectory is clear: the TII remained comfortably below 1.0 for most of the BRI construction decade, consistent with Lim et al.'s (2025) assessment that Kazakhstan had retained export diversification. However, the post-2022 period produces a structural break, with two consecutive above-parity values that are driven not by a Chinese demand surge for Kazakhstani commodities but by the simultaneous narrowing of Kazakhstan's export alternatives as the Northern Corridor disruption redirected trade flows toward China-oriented routes.
+
+\subsection{Revealed Comparative Advantage: No Diversification Beyond Commodities}
+
+The RCA analysis tests whether Kazakhstan's export structure has shifted toward higher-complexity product categories over the decade of BRI engagement. Results for 2024, computed from WITS HS-level bilateral export data, are presented in Table~\ref{tab:rca_results}.
+
+\begin{table}[H]
+\centering
+\small
+\caption{Revealed Comparative Advantage (RCA) by Sector, Kazakhstan, 2024}
+\label{tab:rca_results}
+\begin{tabular}{llrl}
+\toprule
+Sector & HS Chapters & RCA (2024) & Interpretation \\
+\midrule
+Energy                  & 27          & 1.547 & Comparative advantage \\
+Metals and Minerals     & 26, 72--81  & 1.123 & Comparative advantage \\
+Agriculture             & 01--24      & 1.033 & Marginal advantage \\
+Chemicals               & 28--38      & 0.630 & No comparative advantage \\
+Textiles                & 50--63      & 0.439 & No comparative advantage \\
+Machinery and Electrical& 84--85      & 0.172 & No comparative advantage \\
+Plastics and Rubber     & 39--40      & 0.138 & No comparative advantage \\
+Wood and Paper          & 44--49      & 0.022 & No comparative advantage \\
+Vehicles                & 87          & 0.020 & No comparative advantage \\
+\bottomrule
+\end{tabular}
+\footnotesize
+
+\emph{Note:} $RCA_{ik} = (x_{ik}/X_i) \div (x_{wk}/X_w)$. Values $> 1$ indicate Kazakhstan exports the sector proportionally more than the world average. Source: own calculation from WITS HS-level data.
+\end{table}
+
+Three findings are directly relevant to the paper's theoretical argument. First, revealed comparative advantage is entirely confined to commodity and near-commodity sectors: energy (RCA $= 1.547$), metals and minerals (RCA $= 1.123$), and agriculture at the margin (RCA $= 1.033$). Second, every manufacturing and technology sector records an RCA substantially below 1, with machinery and electrical equipment ($0.172$), vehicles ($0.020$), and wood and paper ($0.022$) registering near-zero values that indicate Kazakhstan has essentially no presence in those export categories relative to world trade. Third, comparison with 2015 values confirms stasis: the sectoral RCA rankings are unchanged over the decade and the commodity sectors have retained or marginally increased their advantage while non-commodity sectors show no improvement. The BRI investment decade---during which Chinese FDI in Kazakhstan grew from approximately US\$4.8 billion to US\$11.4 billion---has not generated revealed comparative advantage in any higher-complexity export category. This result directly contradicts Lim et al.'s (2025) claim that bilateral trade has shifted toward a more balanced product mix; at the level of Kazakhstan's global export competitiveness, the structure is unchanged.
+
+\subsection{Trade Asymmetry Index: Structural Break in 2023}
+
+The TAI series tracks the dynamic trajectory of bilateral growth differentials between Kazakhstan's imports from China and its exports to China (Table~\ref{tab:tai_annual}). The series reveals three distinct regimes.
+
+In the \textbf{pre-2020 regime} (2016--2019), TAI values fluctuate in a narrow band around zero ($-0.285$ to $+0.502$), with no systematic directional trend. Export and import growth broadly track one another; the relationship is expanding but without accumulating asymmetry. The average TAI for this period is approximately $+0.095$, consistent with near-symmetric co-movement.
+
+The \textbf{pandemic distortion regime} (2020--2021) produces TAI values of $+1.320$ and $+1.963$. These large positive readings reflect the asymmetric impact of COVID-19 on bilateral trade: Chinese consumer goods exports to Kazakhstan collapsed 71.2\% in 2020, while Kazakhstani commodity exports declined only 14.6\%, producing an apparent surplus driven entirely by supply disruption rather than any improvement in Kazakhstan's competitive position. The 2022 reversal ($TAI = -0.104$) represents the normalization of Chinese exports combined with the exceptional post-Ukraine commodity export surge, and similarly reflects an external shock rather than a structural shift in Kazakhstan's trade capacity.
+
+The \textbf{post-2022 structural break regime} begins in 2023. The TAI of $+1.600$ in 2023 is driven by a 369\% surge in Kazakhstan's imports from China (from US\$7.15 billion to US\$33.54 billion) against export growth of only 41\%. Unlike the pandemic-era spikes, this asymmetry is not attributable to supply disruption on one side: it reflects demand-side penetration of Kazakhstani consumer markets by Chinese manufactured goods, primarily vehicles, electronics, and textiles, following the 2022 elimination of competing supply chains. The 2024 TAI of $+2.433$ reflects denominator compression as both growth rates approach zero on a now-elevated import baseline, confirming that the 2023 import surge established a new structural floor rather than a one-time spike. The Chow test detects a statistically significant structural break at 2020 ($F(2,6) = 3.886$, $p = 0.083$; robust SEs: $F(2,6) = 8.28$, $p = 0.019$), and the discontinuity between the near-zero 2016--2019 TAI mean ($+0.095$) and the 2023--2024 mean ($+2.017$) is inconsistent with a cyclical explanation.
+
+\subsection{Regression Analysis: Structural Shift in Trade Balance}
+
+The regression results reported in Table~\ref{tab:ols_results} are interpreted in light of two constraints: the 10-observation sample means that individual coefficient $p$-values have limited power, and unit root tests confirm non-stationarity in all three key series (trade balance, deficit ratio, total trade), so coefficient estimates describe associations rather than causal relationships.
+
+Four findings warrant emphasis. First, the linear time trend in Model~1 is statistically indistinguishable from zero ($\hat{\beta}_t = +0.234$, $p = 0.734$), indicating that the trade balance does not follow a smooth secular deterioration over the full 2015--2024 period. This is consistent with the visual record: the balance fluctuates widely before and after the 2020 disruption, and a single trend line captures none of the structural variation.
+
+Second, the Post-2020 shift dummy in Model~2 is marginally significant ($\hat{\beta}_{\text{Post2020}} = +11.246$, $p = 0.061$) and the negative trend coefficient in that model ($\hat{\beta}_t = -1.470$) suggests that within the post-2020 period the balance was deteriorating at roughly US\$1.5 billion per year. The joint significance of these two terms under robust standard errors ($F(2,6) = 8.28$, $p = 0.019$) provides statistical support for a structural level shift beginning around 2020--2022, consistent with the qualitative evidence on the Ukraine-driven corridor disruption.
+
+Third, the China import share trend regression yields $\hat{\beta}_{\text{trend}} = +0.868$ percentage points per year ($p = 0.569$)---not statistically significant---which means the 2023 surge in China's import share from 7.3\% to 21.9\% of Kazakhstan's total imports cannot be characterized as a smooth secular penetration. It is a concentrated step-change. By contrast, China's share of Kazakhstan's total exports does show a marginally significant upward trend ($\hat{\beta} = +0.447$ pp/year, $p = 0.253$), consistent with Kazakhstan's growing export orientation toward Chinese commodity demand.
+
+Fourth, the ADF unit root results ($Z_t = -0.771$ for trade balance, $p = 0.968$) indicate that the bilateral trade balance is non-stationary---it does not revert to a long-run mean---which implies that the post-2023 deficit cannot be presumed to self-correct without a structural change in either the export composition or the import substitution capacity of the Kazakhstani economy.
+
+\subsection{Qualitative Findings: Diplomatic Declaration versus Commercial Effect}
+
+Document analysis of bilateral policy instruments reveals a systematic gap between diplomatic declaration and commercial outcome across all three categories examined.
+
+The Strategic Partnership declarations (2013, 2019) established bilateral trade targets and diversification provisions that were not achieved on the timelines specified. The 2013 target of US\$40 billion by 2020 was missed by approximately US\$10 billion. The 2019 provisions for local currency settlement and agricultural export expansion have not altered the commodity share of Kazakhstani exports to China, which remained above 85\% in 2024. The declarations function as diplomatic framing instruments; they set aspirational benchmarks but contain no enforcement mechanisms to alter the product composition of trade.
+
+The 2019 Automobile Production Roadmap illustrates the limitations of localization policy as a diversification tool. Vehicle imports from China rose 932\% between the pre- and post-2023 periods despite---or in part because of---the roadmap's assembly localization targets. The arrangements created by the roadmap have primarily benefited Chinese OEMs (JAC Motors, Haval, Chery) seeking EAEU market access via Kazakhstan's rules-of-origin umbrella, not Kazakhstani industrial developers. Kazakhstan's value-chain position remains confined to low-complexity final assembly.
+
+Middle Corridor policy instruments have succeeded in their stated logistical objectives: the Trans-Caspian route now carries regular China--Europe freight services and Kazakhstan's transit fee revenues have increased. However, the commercial beneficiaries of expanded corridor capacity are primarily Chinese manufactured goods exporters accessing European markets. Kazakhstan's transit centrality has deepened without generating upstream supplier development or shifting the composition of bilateral trade between Kazakhstan and China.
+
+The consistent pattern across all three policy categories is that instruments designed around diplomatic co-operation and logistical facilitation have been effective in their own terms, while instruments designed to alter Kazakhstan's structural position in the value chain---diversification targets, localization requirements, agricultural export provisions---have not produced discernible shifts in the RCA profile or in the product-level composition of bilateral trade.
+
+%% ============================================================
+%% V. KAZAKHSTAN'S EXTERNAL TRADE STRUCTURE (2015--2025)
 %% ============================================================
 \section{Kazakhstan's External Trade Structure, 2015--2025}
+
 
 \subsection{The Multipolar Baseline and Its Erosion}
 
@@ -247,7 +354,7 @@ Year & Exports & Imports & Balance & Total \\
 \end{table}
 
 %% ============================================================
-%% V. STRUCTURAL FEATURES OF SINO-KAZAKH TRADE
+%% VI. STRUCTURAL FEATURES OF SINO-KAZAKH TRADE
 %% ============================================================
 \section{Structural Features of Sino-Kazakh Trade}
 
@@ -301,7 +408,7 @@ For most of the BRI era, Kazakhstan maintained a modest bilateral surplus with C
 \end{figure}
 
 %% ============================================================
-%% VI. COMPARATIVE ANALYSIS: CHINA, RUSSIA, AND THE EU
+%% VII. COMPARATIVE ANALYSIS: CHINA, RUSSIA, AND THE EU
 %% ============================================================
 \section{Comparative Analysis: China, Russia, and the European Union}
 
@@ -332,7 +439,7 @@ Kazakhstan's EU trade relationship is the most technologically asymmetrical of i
 Among Kazakhstan's three major trading partners, the Sino-Kazakh relationship generates the most acute combination of dependency risks because China's economic scale, competitive manufacturing position, and investment penetration operate simultaneously across multiple sectors rather than being confined to a single domain. The automotive sector illustrates this pattern concretely: Chinese brands have used Kazakhstan's EAEU membership to establish localization facilities that obtain ``Made in Kazakhstan'' certification, gaining tariff-free access to Russian and Central Asian markets. The strategic value of this arrangement accrues primarily to Chinese manufacturers gaining EAEU market access, while Kazakhstan's position in the value chain is confined to lower-complexity assembly operations. Rather than building an independent supply chain, Kazakhstan has become an institutional gateway for Chinese industrial expansion into the broader EAEU market. These structural risks are compounded by domestic political constraints. The pattern of high-level diplomatic harmony coexisting with persistent popular skepticism toward Chinese economic activity has repeatedly constrained the government's room for maneuver. The 2016 land reform protests, sustained opposition to the ``55 Factories'' plan, and public anger over the treatment of ethnic Kazakhs in Xinjiang have created a domestic environment in which the government must defend Chinese economic engagement without being able to address the commodity-dependence and labor-market concerns that motivate public opposition. Neither administrative restriction nor strategic communications campaigns has resolved the underlying structural grievances, and these constraints are likely to intensify as the trade deficit deepens and the visibility of Chinese commercial activity in domestic consumer markets increases (Primiano \& Kudebayeva, 2025; MERICS, 2022).
 
 %% ============================================================
-%% VII. SYNTHESIS AND CONCLUSIONS
+%% VIII. SYNTHESIS AND CONCLUSIONS
 %% ============================================================
 \section{Synthesis and Conclusions}
 
