@@ -44,6 +44,10 @@ else {
 cd "`project_root'"
 
 local china_csv "chinaworldimports/DataJobID-3075788_3075788_chinaWorldImports.csv"
+capture confirm file "`china_csv'"
+if _rc != 0 {
+    local china_csv "archive/misc/chinaworldimports/DataJobID-3075788_3075788_chinaWorldImports.csv"
+}
 local y0 2015
 local y1 2024
 
