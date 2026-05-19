@@ -81,6 +81,10 @@ This framework leads to a narrower and clearer argument: Kazakhstan's principal 
 
 Bilateral trade and investment data are drawn primarily from the World Bank's World Integrated Trade Solution (WITS) database for Kazakhstan--China flows from 2015 to 2024. Product-level data are organized using Harmonized System (HS) categories and grouped into major sectors including energy, metals and minerals, chemicals, agriculture, machinery, vehicles, electronics, and other manufactures. For index construction, the paper uses (i) Kazakhstan--China bilateral and sectoral trade from the project panel, (ii) China imports from world and world imports aggregates from WITS raw comma-separated values (CSV) pulls, and (iii) Kazakhstan unit-value indicators from World Development Indicators (WDI) for export and import unit value indices. Supplementary information on Chinese investment and corridor policy is taken from Kazakhstan's National Bank, the Asian Development Bank, the World Bank, and policy documents cited in the literature.
 
+\subsection{Data Processing and Reproducibility}
+
+All quantitative results, indices, tables, and figures in this paper were compiled by the author using Stata do-files in the project workflow. The analysis pipeline imports raw data from WITS and WDI, constructs harmonized sectoral panels, and computes TII, RCA, HHI, TCI, and ToT directly from those source datasets. No quantitative table or figure was copied from external publications; all reported values are author-generated from the cited primary data sources.
+
 \subsection{Trade Intensity Index}
 
 The Trade Intensity Index (TII) is used here only as a descriptive indicator of bilateral salience, not as the paper's main measure of vulnerability. The core argument rests on sectoral composition and structural trade position rather than partner salience alone. Following Brown (1949), the index is:
@@ -112,16 +116,16 @@ World-systems theory predicts that the Kazakhstan--China trade relationship repr
 \paragraph{Export Concentration Index (HHI).}
 The Herfindahl--Hirschman Index measures the degree to which Kazakhstan's export basket to China is concentrated in a narrow set of sectors:
 \begin{equation}
-\text{HHI}_t = \sum_{i=1}^{n} s_{it}^2
+\text{HHI}_t = \sum_{p=1}^{n} s_{p,t}^2
 \end{equation}
-\noindent where $s_{it}$ is the share of product $i$ in Kazakhstan's exports to China in year $t$. Higher values indicate stronger concentration and therefore greater reliance on a limited number of export categories.
+\noindent where $s_{p,t}$ is the share of product $p$ in Kazakhstan's exports to China in year $t$. Higher values indicate stronger concentration and therefore greater reliance on a limited number of export categories.
 
 \paragraph{Trade Complementarity Index (TCI).}
 The Trade Complementarity Index captures the degree to which Kazakhstan's export structure matches China's import demand:
 \begin{equation}
-\text{TCI}_{kj} = 100 \times \left(1 - \frac{\sum_i |m_i^j - x_i^k|}{2}\right)
+\text{TCI}_{ij,t} = 100 \times \left(1 - \frac{\sum_{p}\left|m_{p,j,t} - x_{p,i,t}\right|}{2}\right)
 \end{equation}
-\noindent where $m_i^j$ is the share of product $i$ in China's total imports and $x_i^k$ is the share of product $i$ in Kazakhstan's total exports. High complementarity does not by itself indicate balanced development; in this case, it may simply show that Kazakhstan fits efficiently into China's demand for raw materials.
+\noindent where $m_{p,j,t}$ is the share of product $p$ in country $j$'s total imports in year $t$, and $x_{p,i,t}$ is the share of product $p$ in country $i$'s total exports in year $t$. In this paper, $i$ denotes Kazakhstan and $j$ denotes China. High complementarity does not by itself indicate balanced development; in this case, it may simply show that Kazakhstan fits efficiently into China's demand for raw materials.
 
 \paragraph{Terms of Trade (ToT).}
 Terms of trade are used here to capture the developmental implications of commodity--manufacture exchange:
@@ -146,7 +150,7 @@ China's share of Kazakhstan's external trade increased between 2015 and 2024, es
 
 \begin{table}[h]
 \centering
-\caption{Kazakhstan--China Bilateral Trade, 2015--2024}
+\caption{Kazakhstan--China Bilateral Trade, 2015--2024. Source: author's calculations from WITS data.}
 \label{tab:bilateral-trade}
 \begin{tabular}{rrrrr}
 \toprule
@@ -172,7 +176,7 @@ As shown in Table~\ref{tab:bilateral-trade}, the 2023 deficit is best interprete
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.95\textwidth]{../figures/fig12_trade_flows.png}
-\caption{Kazakhstan--China bilateral trade flows, 2015--2024. Source: author's extraction from the original draft figure based on WITS data.}
+\caption{Kazakhstan--China bilateral trade flows, 2015--2024. Source: author's calculations from WITS data.}
 \label{fig:trade-flows}
 \end{figure}
 
@@ -182,7 +186,7 @@ As shown in Figure~\ref{fig:trade-flows}, trade values expand sharply over the s
 
 \begin{table}[h]
 \centering
-\caption{Formula-Based Indices, 2015--2024}
+\caption{Formula-Based Indices, 2015--2024. Source: author's calculations from WITS and WDI data.}
 \label{tab:formula-indices}
 \begin{tabular}{rrrrr}
 \toprule
@@ -217,14 +221,14 @@ High complementarity between Kazakhstan's exports and China's import demand is t
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.95\textwidth]{../figures/fig1_export_composition.png}
-\caption{Kazakhstan's exports to China by sector, 2015--2024. Source: author's extraction from the original draft figure based on WITS HS-level data.}
+\caption{Kazakhstan's exports to China by sector, 2015--2024. Source: author's calculations from WITS HS-level data.}
 \label{fig:export-composition}
 \end{figure}
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.95\textwidth]{../figures/fig2_import_composition.png}
-\caption{Kazakhstan's imports from China by sector, 2015--2024. Source: author's extraction from the original draft figure based on WITS HS-level data.}
+\caption{Kazakhstan's imports from China by sector, 2015--2024. Source: author's calculations from WITS HS-level data.}
 \label{fig:import-composition}
 \end{figure}
 
@@ -267,7 +271,7 @@ The post-2023 deficit is best interpreted as a warning sign rather than the core
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.95\textwidth]{../figures/fig13_trade_balance.png}
-\caption{Kazakhstan--China bilateral trade balance, 2015--2024. Source: author's extraction from the original draft figure based on WITS data.}
+\caption{Kazakhstan--China bilateral trade balance, 2015--2024. Source: author's calculations from WITS data.}
 \label{fig:trade-balance}
 \end{figure}
 
